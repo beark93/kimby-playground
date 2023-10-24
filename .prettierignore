@@ -1,0 +1,13 @@
+.vscode
+.git
+
+/**/node_modules/*
+/**/dist/*
+/**/build/*
+
+node_modules/
+dist/
+build/
+
+*.html
+*.md

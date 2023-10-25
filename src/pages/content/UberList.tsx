@@ -29,14 +29,14 @@ const tabStyle = {
 };
 
 const UberList = () => {
-  const [displayList, setDisplayList] = useState<Array<UberType>>(defaultList);
-  const [data, setData] = useState<Array<UberType>>([]);
+  const [displayList, setDisplayList] = useState<UberType[]>(defaultList);
+  const [data, setData] = useState<UberType[]>([]);
   const [ladder, setLadder] = useState('1');
   const [isLoading, setIsLoading] = useState(true);
 
   const callUberApi = () =>
     getUberList().then((res) => {
-      setData(res.data);
+      setData(res.data.items);
       setIsLoading(false);
     });
 

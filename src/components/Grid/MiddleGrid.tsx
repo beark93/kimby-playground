@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Grid, { GridProps } from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 
@@ -12,4 +14,4 @@ const MiddleGrid = (props: GridProps) => {
   return <StyledGrid {...props} />;
 };
 
-export default MiddleGrid;
+export default React.memo(MiddleGrid);

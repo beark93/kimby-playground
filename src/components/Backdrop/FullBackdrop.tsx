@@ -17,6 +17,7 @@ const FullBackdrop = ({ children, open }: PropsType) => {
         height: '100%',
         color: '#fff',
         zIndex: 1,
+        mt: 1,
       }}
     >
       {children}

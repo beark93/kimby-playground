@@ -3,11 +3,8 @@ import axios from 'axios';
 import { UberType } from '@utils/uber';
 
 const d2rApi = axios.create({
-  baseURL:
-    process.env.NODE_ENV === 'production'
-      ? 'https://diablo2.io/dclone_api.php'
-      : '/api',
-  timeout: 120000,
+  baseURL: '/api/v1/uber/list',
+  timeout: 1000,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -15,6 +12,11 @@ const d2rApi = axios.create({
   },
 });
 
+interface ApiResponse<T> {
+  items: T[];
+  count: number;
+}
+
 export async function getUberList() {
-  return await d2rApi.get<Array<UberType>>('');
+  return await d2rApi.get<ApiResponse<UberType>>('');
 }

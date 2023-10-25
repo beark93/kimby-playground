@@ -3,10 +3,7 @@ import React from 'react';
 import { Box, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import {
-  useCard,
-  useCardGameDispatch,
-} from '@components/Provider/CardGameProvider';
+import { useCard, useCardGameDispatch } from 'src/Provider/CardGameProvider';
 
 const StyledPaper = styled(Paper)`
   ${({ theme }) => `
@@ -52,8 +49,8 @@ const FlipPaper = ({ index }: PropsType) => {
     <Box
       sx={{
         perspective: '500px',
-        width: { zero: '44px', min: '17.5vw', max: '100px' },
-        height: { zero: '58px', min: '25vw', max: '130px' },
+        width: '80%',
+        height: { zero: '60px', min: '23vw', max: '140px' },
       }}
       onClick={onClick}
     >

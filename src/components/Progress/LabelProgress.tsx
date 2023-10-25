@@ -1,17 +1,9 @@
 import { Grid, LinearProgress, Typography } from '@mui/material';
+import { LinearProgressProps } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 
-type PropsType = {
+type PropsType = LinearProgressProps & {
   label: string;
-  value: number;
-  color:
-    | 'inherit'
-    | 'primary'
-    | 'secondary'
-    | 'error'
-    | 'info'
-    | 'success'
-    | 'warning';
 };
 
 const LabelProgress = ({ label, value, color }: PropsType) => {

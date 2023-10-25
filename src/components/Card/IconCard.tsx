@@ -1,53 +1,38 @@
 import React from 'react';
 
-import {
-  Card,
-  CardContent,
-  CardActionArea,
-  Paper,
-  Typography,
-} from '@mui/material';
-import { PaperProps } from '@mui/material/Paper/Paper';
+import { Card, CardContent, CardActionArea, Typography } from '@mui/material';
+import { CardProps } from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
+import FolderTwoToneIcon from '@mui/icons-material/FolderTwoTone';
 
 type PropsType = {
   title: string;
-  background: string;
   onClick?: () => void;
 };
 
-const IconPaper = styled(Paper)<PaperProps>(({ theme }) => ({
-  width: '100px',
-  height: '100px',
-  [theme.breakpoints.down('max')]: {
-    width: '85px',
-    height: '85px',
-  },
-  mb: 1,
+const StyledCard = styled(Card)<CardProps>(() => ({
+  width: '100%',
+  backgroundColor: 'rgba(255, 255, 255, 0)',
+  boxShadow: 'none',
 }));
 
-const IconCard = ({ title, background, onClick }: PropsType) => {
+const IconCard = ({ title, onClick }: PropsType) => {
   return (
-    <Card
-      sx={{
-        backgroundColor: 'rgba(255, 255, 255, 0)',
-      }}
-    >
+    <StyledCard>
       <CardActionArea onClick={onClick}>
-        <CardContent>
-          <IconPaper sx={{ backgroundColor: background }} />
+        <CardContent sx={{ p: 0, textAlign: 'center' }}>
+          <FolderTwoToneIcon
+            sx={{ fontSize: { zero: '4rem', min: '25vw', max: '6rem' } }}
+          />
           <Typography
-            fontSize={{
-              max: '1rem',
-            }}
+            fontSize={{ zero: '0.8rem', min: '4vw', max: '1rem' }}
             color='inherit'
-            textAlign='center'
           >
             {title}
           </Typography>
         </CardContent>
       </CardActionArea>
-    </Card>
+    </StyledCard>
   );
 };
 

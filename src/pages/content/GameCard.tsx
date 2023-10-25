@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { Typography, Stack, Button, Modal, Paper } from '@mui/material';
+import { Typography, Grid, Button, Modal, Paper } from '@mui/material';
 import { TypographyProps } from '@mui/material/Typography';
 import { PaperProps } from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
 import BasicHeader from '@components/Header/BasicHeader';
 import MiddleTypography from '@components/Typography/MiddleTypography';
+import MiddleGrid from '@components/Grid/MiddleGrid';
 import FullBackdrop from '@components/Backdrop/FullBackdrop';
 import FlipPaper from '@components/Paper/FlipPaper';
 
@@ -15,7 +16,7 @@ import {
   useCardGameState,
   useCardGameTimer,
   useCardGameDispatch,
-} from '@components/Provider/CardGameProvider';
+} from 'src/Provider/CardGameProvider';
 
 const BackDropTypography = styled(Typography)<TypographyProps>(({ theme }) => ({
   fontSize: theme.typography.h1.fontSize,
@@ -79,15 +80,12 @@ const GameCard = () => {
       >
         {gameTimer.toFixed(2)}
       </Typography>
-      <Stack
+      <Grid
+        container
+        rowSpacing={2}
         position='relative'
-        direction='row'
-        justifyContent='space-between'
-        alignItems='center'
-        useFlexGap
-        flexWrap='wrap'
         p={{ zero: 1, max: 4 }}
-        spacing={{ zero: 1, max: 2 }}
+        zero={12}
       >
         <FullBackdrop open={!isStart}>
           {gameState === 'INIT' ? (
@@ -103,9 +101,11 @@ const GameCard = () => {
           )}
         </FullBackdrop>
         {cards.map((_, index) => (
-          <FlipPaper key={`card-${index}`} index={index} />
+          <MiddleGrid item key={`card-${index}`} zero={3}>
+            <FlipPaper index={index} />
+          </MiddleGrid>
         ))}
-      </Stack>
+      </Grid>
       <Modal open={gameState === 'END'}>
         <ModalPaper>
           <Typography

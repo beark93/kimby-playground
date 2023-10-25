@@ -15,10 +15,9 @@ export default function config(_, argv) {
       historyApiFallback: true,
       port: 3000,
       hot: true,
-      static: path.join(__dirname, 'dist'),
       proxy: {
         '/api': {
-          target: 'https://diablo2.io/dclone_api.php',
+          target: 'http://localhost:3001',
           changeOrigin: true,
           pathRewrite: {
             '^/api': '',
@@ -34,8 +33,15 @@ export default function config(_, argv) {
           exclude: /node_modules/,
         },
         {
-          test: /\.(png|jpe?g|gif)$/,
-          use: ['file-loader'],
+          test: /\.(png|svg|jpe?g|gif)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: 'images/[name].[ext]?[hash]',
+              },
+            },
+          ],
         },
         {
           test: /\.css$/,

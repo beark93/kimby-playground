@@ -1,4 +1,4 @@
-import Routes from './routes'
+import Routes from './routes';
 
 import { CssBaseline, GlobalStyles, Container, Box } from '@mui/material';
 import {
@@ -7,14 +7,19 @@ import {
   responsiveFontSizes,
 } from '@mui/material/styles';
 
+/**
+ * breackpoint modify
+ * xs, sm, md, lg, xl remove
+ * mobile add (min: Galaxy Fold(280px), max: mobile(640px))
+ */
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
-    xs: false; // removes the `xs` breakpoint
+    xs: false;
     sm: false;
     md: false;
     lg: false;
     xl: false;
-    zero: true; // adds the `mobile` breakpoint
+    zero: true;
     min: true;
     max: true;
   }
@@ -25,8 +30,8 @@ const theme = responsiveFontSizes(
     breakpoints: {
       values: {
         zero: 0,
-        min: 250,
-        max: 600,
+        min: 280,
+        max: 640,
       },
     },
   })
@@ -43,10 +48,7 @@ const App = () => {
             backgroundColor: '#fff',
             height: '100%',
             minHeight: '100vh',
-            py: {
-              zero: 2,
-              max: 6,
-            },
+            py: 2,
           }}
         >
           <GlobalStyles styles={{ body: { backgroundColor: '#ececec' } }} />
@@ -55,7 +57,7 @@ const App = () => {
               width: '100%',
               height: '100%',
               display: 'inline-block',
-              minWidth: '220px',
+              minWidth: '250px',
             }}
           >
             <Routes />

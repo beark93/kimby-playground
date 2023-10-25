@@ -49,23 +49,27 @@ const CardGameStateContext = createContext<State | null>(null);
 const CardGameTimerContext = createContext<Timer | null>(null);
 const CardGameDispatchContext = createContext<Dispatch | null>(null);
 
+// 게임 상태 Actions
 const stateReducer: (state: State, action: StateAction) => State = (
   state: State,
   action: StateAction
 ) => {
   switch (action.type) {
+    // 미리보기 시작
     case 'PREVIEW_START':
       return {
         ...state,
         cards: state.cards.map((it) => ({ ...it, flip: true })),
         gameState: 'VIEW',
       };
+    // 미리보기 끝 / 게임 시작
     case 'PREVIEW_END':
       return {
         ...state,
         cards: state.cards.map((it) => ({ ...it, flip: false })),
         gameState: 'CHOICE',
       };
+    // 카드 클릭
     case 'CARD_CLICK':
       return {
         ...state,
@@ -73,17 +77,20 @@ const stateReducer: (state: State, action: StateAction) => State = (
           idx === action.index ? { ...it, flip: true } : it
         ),
       };
+    // 카드 체크 (2장의 카드가 뒤집혔을 경우)
     case 'CHECK_START':
       return {
         ...state,
         gameState: 'CHECK',
       };
+    // 동일한 카드가 뒤집혔을 경우
     case 'CHECK_SUCCESS':
       return {
         ...state,
         count: state.count + 1,
         gameState: 'CHOICE',
       };
+    // 다른 카드가 뒤집혔을 경우
     case 'CHECK_FAIL':
       return {
         ...state,
@@ -94,6 +101,7 @@ const stateReducer: (state: State, action: StateAction) => State = (
         ),
         gameState: 'CHOICE',
       };
+    // 게임 끝
     case 'END':
       return {
         cards: state.cards.map((it) => ({ id: it.id, flip: it.flip })),
@@ -103,21 +111,25 @@ const stateReducer: (state: State, action: StateAction) => State = (
   }
 };
 
+// 게임 타이머 Actions
 const timerReducer: (timer: Timer, action: TimerAction) => Timer = (
   timer: Timer,
   action: TimerAction
 ) => {
   switch (action.type) {
+    // 미리보기 타이머 시작
     case 'VIEW_TIMER':
       return {
         ...timer,
         viewTimer: timer.viewTimer - 1,
       };
+    // 게임 타이머 시작
     case 'GAME_TIMER':
       return {
         ...timer,
         gameTimer: timer.gameTimer - 0.02,
       };
+    // 게임 끝
     case 'END':
       return {
         takenTime: GAME_TIME - timer.gameTimer,
@@ -149,13 +161,12 @@ const CardGameProvider = ({ children }: { children: React.ReactNode }) => {
   const cardCheckTimeout = useRef<number>();
   const preIndex = useRef(-1);
 
+  // 게임시작 버튼 클릭 시
   const onGameStart = useCallback(() => {
-    // 게임시작 버튼 클릭 시
     if (state.gameState !== 'INIT') {
       return;
     }
 
-    // 카드 미리보기
     stateDispatch({ type: 'PREVIEW_START' });
 
     viewTimerInterval.current = setInterval(() => {
@@ -172,9 +183,9 @@ const CardGameProvider = ({ children }: { children: React.ReactNode }) => {
     }, 3000);
   }, [state.gameState]);
 
+  //  카드 클릭
   const onFlip = useCallback(
     (index: number) => {
-      //  카드 클릭
       if (state.gameState !== 'CHOICE') {
         return;
       }
@@ -243,7 +254,7 @@ const CardGameProvider = ({ children }: { children: React.ReactNode }) => {
 
 export default CardGameProvider;
 
-export const GAME_TIME = 5;
+export const GAME_TIME = 15;
 
 export const useCardGameState = () => {
   const state = useContext(CardGameStateContext);

@@ -51,6 +51,7 @@ export default function config(_, argv) {
     },
     output: {
       publicPath: '/',
+      path: path.resolve(__dirname, 'dist'),
     },
     resolve: {
       modules: [path.resolve(__dirname, 'src'), 'node_modules'],

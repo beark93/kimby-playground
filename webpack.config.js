@@ -19,9 +19,6 @@ export default function config(_, argv) {
         '/api': {
           target: 'http://localhost:3001',
           changeOrigin: true,
-          pathRewrite: {
-            '^/api': '',
-          },
         },
       },
     },

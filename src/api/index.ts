@@ -4,7 +4,7 @@ import { UberType } from '@utils/uber';
 
 const d2rApi = axios.create({
   baseURL: '/api/v1/uber/list',
-  timeout: 1000,
+  timeout: 12000,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

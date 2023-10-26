@@ -3,11 +3,10 @@ os: linux
 files:
   - source: /
     destination: /home/ec2-user/kimby-playground/dist
-    overwrite: yes
 file_exists_behavior: OVERWRITE
 
 permissions:
-  - object: /home/ec2-user/kimby-playground/dist
-    owner: root
-    group: root
+  - object: /
+    owner: ec2-user
+    group: ec2-user
     mode: 755

@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: pnpm build
       - name: tar create
-        run: tar cvfz ./dist.tar.gz ./dist
+        run: tar cvfz ./playground.tar.gz *
         shell: bash
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -33,7 +33,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Upload to S3
         run: |
-          aws s3 cp --region ap-northeast-2 ./dist.tar.gz s3://kimby-bucket
+          aws s3 cp --region ap-northeast-2 ./playground.tar.gz s3://kimby-bucket
       - name: Deploy
         run:
           aws deploy create-deployment 
@@ -41,4 +41,4 @@ jobs:
           --deployment-config-name CodeDeployDefault.AllAtOnce
           --deployment-group-name kimby-codeDeploy-group
           --ignore-application-stop-failures 
-          --s3-location bucket=kimby-bucket,bundleType=tgz,key=dist.tar.gz
+          --s3-location bucket=kimby-bucket,bundleType=tgz,key=playground.tar.gz

@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: pnpm build
       - name: tar create
-        run: tar cvfz ./playground.tar.gz *
+        run: tar cvfz ./playground.tar.gz ./dist ./appspec.yml
         shell: bash
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

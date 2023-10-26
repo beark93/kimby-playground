@@ -36,7 +36,9 @@ jobs:
           aws s3 cp --region ap-northeast-2 ./dist.tar.gz s3://kimby-bucket
       - name: Deploy
         run:
-          aws deploy create-deployment --application-name kimby-codeDeploy
+          aws deploy create-deployment 
+          --application-name kimby-codeDeploy
           --deployment-config-name CodeDeployDefault.AllAtOnce
-          --deployment-group-name kimby-codeDeploy-group --s3-location
-          bucket=kimby-bucket,bundleType=tgz,key=dist.tar.gz
+          --deployment-group-name kimby-codeDeploy-group
+          --ignore-application-stop-failures 
+          --s3-location bucket=kimby-bucket,bundleType=tgz,key=dist.tar.gz

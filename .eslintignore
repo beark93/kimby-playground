@@ -1,5 +1,7 @@
 .vscode
 .git
+.github
+
 README.md
 /**/node_modules/*
 /**/dist/*

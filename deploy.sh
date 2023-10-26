@@ -1,7 +1,8 @@
+#!/bin/bash
 REPOSITORY=/home/ec2-user/kimby-playground
 
 cd $REPOSITORY
 
-pnpm install
+# pnpm install
 
-pnpm build
+# pnpm build

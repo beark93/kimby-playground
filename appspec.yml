@@ -6,11 +6,11 @@ files:
     overwrite: yes
 permissions:
   - object: /home/ec2-user/kimby-playground
-    owner: root
-    group: root
+    owner: ec2-user
+    group: ec2-user
     mode: 755
 hooks:
   AfterInstall:
     - location: deploy.sh
       timeout: 1000
-      runas: root
+      runas: ec2-user

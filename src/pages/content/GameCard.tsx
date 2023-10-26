@@ -138,7 +138,9 @@ const GameCard = () => {
               },
             })}
           >
-            {takenTime < GAME_TIME ? `Score: ${takenTime}` : 'Time Over...'}
+            {takenTime < GAME_TIME
+              ? `Score: ${takenTime.toFixed(2)}`
+              : 'Time Over...'}
           </Typography>
           <Typography
             textAlign='center'

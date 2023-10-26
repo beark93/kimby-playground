@@ -1,6 +1,7 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 const __dirname = path.resolve();
@@ -62,6 +63,14 @@ export default function config(_, argv) {
     plugins: [
       new HtmlWebpackPlugin({
         template: './public/index.html',
+      }),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, 'public/assets/'),
+            to: path.resolve(__dirname, 'dist/assets/'),
+          },
+        ],
       }),
       new CleanWebpackPlugin(),
     ],

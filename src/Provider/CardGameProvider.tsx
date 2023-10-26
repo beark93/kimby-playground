@@ -33,11 +33,13 @@ type StateAction =
   | { type: 'CHECK_START' }
   | { type: 'CHECK_SUCCESS' }
   | { type: 'CHECK_FAIL'; index: number; preIndex: number }
+  | { type: 'TIME_OVER' }
   | { type: 'END' };
 
 type TimerAction =
   | { type: 'VIEW_TIMER' }
   | { type: 'GAME_TIMER' }
+  | { type: 'TIME_OVER' }
   | { type: 'END' };
 
 type Dispatch = {
@@ -101,6 +103,12 @@ const stateReducer: (state: State, action: StateAction) => State = (
         ),
         gameState: 'CHOICE',
       };
+    // 시간 종료
+    case 'TIME_OVER':
+      return {
+        ...state,
+        gameState: 'END',
+      };
     // 게임 끝
     case 'END':
       return {
@@ -127,15 +135,24 @@ const timerReducer: (timer: Timer, action: TimerAction) => Timer = (
     case 'GAME_TIMER':
       return {
         ...timer,
-        gameTimer: timer.gameTimer - 0.02,
+        gameTimer: parseFloat((timer.gameTimer - 0.02).toFixed(2)),
       };
-    // 게임 끝
-    case 'END':
+    // 시간 종료
+    case 'TIME_OVER': {
       return {
-        takenTime: GAME_TIME - timer.gameTimer,
+        takenTime: GAME_TIME,
         viewTimer: 0,
         gameTimer: 0,
       };
+    }
+    // 게임 끝
+    case 'END': {
+      const takenTime = GAME_TIME - timer.gameTimer;
+      return {
+        ...timer,
+        takenTime: takenTime,
+      };
+    }
   }
 };
 
@@ -199,6 +216,10 @@ const CardGameProvider = ({ children }: { children: React.ReactNode }) => {
           if (state.count < 7) {
             stateDispatch({ type: 'CHECK_SUCCESS' });
           } else {
+            if (cardCheckTimeout.current) {
+              clearTimeout(cardCheckTimeout.current);
+            }
+            clearInterval(gameTimerInterval.current);
             stateDispatch({ type: 'END' });
             timerDispatch({ type: 'END' });
           }
@@ -226,8 +247,8 @@ const CardGameProvider = ({ children }: { children: React.ReactNode }) => {
         clearTimeout(cardCheckTimeout.current);
       }
       clearInterval(gameTimerInterval.current);
-      stateDispatch({ type: 'END' });
-      timerDispatch({ type: 'END' });
+      stateDispatch({ type: 'TIME_OVER' });
+      timerDispatch({ type: 'TIME_OVER' });
     }
   }, [timer.gameTimer]);
 

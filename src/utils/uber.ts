@@ -36,7 +36,7 @@ export function getUberLabel(progress: string, region: string, hc: string) {
 }
 
 export function getUberProgressValue(progress: string) {
-  return parseInt(((parseInt(progress) / 6) * 100).toFixed(2));
+  return parseFloat(((parseInt(progress) / 6) * 100).toFixed(2));
 }
 
 export function getUberProgressColor(progress: string) {

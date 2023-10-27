@@ -27,6 +27,9 @@ declare module '@mui/material/styles' {
 
 const theme = responsiveFontSizes(
   createTheme({
+    typography: {
+      fontFamily: 'Jua',
+    },
     breakpoints: {
       values: {
         zero: 0,

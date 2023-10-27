@@ -56,7 +56,12 @@ const FlipPaper = ({ index }: PropsType) => {
     >
       <StyledPaper className={flip ? 'flip' : ''}>
         <Paper className='front'>
-          <Typography variant='h1'>{id}</Typography>
+          <Typography
+            fontFamily='Playpen Sans'
+            fontSize={{ zero: '1.5rem', min: '8vw', max: '4rem' }}
+          >
+            {id}
+          </Typography>
         </Paper>
         <Paper className='back' sx={{ backgroundColor: '#aaaaaa' }}></Paper>
       </StyledPaper>

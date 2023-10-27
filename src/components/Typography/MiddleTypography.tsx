@@ -7,7 +7,7 @@ import MiddleStack from '@components/Stack/MiddleStack';
 const MiddleTypography = (props: TypographyProps) => {
   return (
     <MiddleStack>
-      <Typography variant={props.variant}>{props.children}</Typography>
+      <Typography {...props} />
     </MiddleStack>
   );
 };

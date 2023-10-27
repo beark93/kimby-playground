@@ -66,15 +66,20 @@ const GameCard = () => {
   return (
     <>
       <BasicHeader>
-        <MiddleTypography variant='h6'>Card Game</MiddleTypography>
+        <MiddleTypography
+          fontSize={{
+            zero: '1.2rem',
+            max: 'h4.fontSize',
+          }}
+        >
+          Card Game
+        </MiddleTypography>
       </BasicHeader>
       <Typography
         align='center'
-        sx={{
-          fontSize: {
-            zero: '1.2rem',
-            max: 'h4.fontSize',
-          },
+        fontSize={{
+          zero: '1.2rem',
+          max: 'h4.fontSize',
         }}
         gutterBottom
       >

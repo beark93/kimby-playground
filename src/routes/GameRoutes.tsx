@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import GameCard from '@pages/content/GameCard';
+import GameCard from '@pages/Game/GameCard';
 import CardGameProvider from 'src/Provider/CardGameProvider';
 
 const GameRoutes = {

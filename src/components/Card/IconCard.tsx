@@ -20,7 +20,7 @@ const IconCard = ({ title, onClick }: PropsType) => {
   return (
     <StyledCard>
       <CardActionArea onClick={onClick}>
-        <CardContent sx={{ p: 0, textAlign: 'center' }}>
+        <CardContent sx={{ p: 0, textAlign: 'center', lineHeight: 0 }}>
           <FolderTwoToneIcon
             sx={{ fontSize: { zero: '4rem', min: '25vw', max: '6rem' } }}
           />

@@ -156,9 +156,10 @@ const timerReducer: (timer: Timer, action: TimerAction) => Timer = (
   }
 };
 
-const shuffledCards = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8].toSorted(
-  () => Math.random() - 0.5
-);
+// const shuffledCards = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8].toSorted(
+//   () => Math.random() - 0.5
+// );
+const shuffledCards = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
 
 const CardGameProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, stateDispatch] = useReducer(stateReducer, {

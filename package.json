@@ -12,7 +12,7 @@
     "start": "webpack --mode development",
     "lint": "eslint .",
     "lint-staged": "lint-staged",
-    "test": "jest"
+    "test": "jest --maxWorkers=50%"
   },
   "keywords": [],
   "author": "",

@@ -33,6 +33,8 @@ const StyledPaper = styled(Paper)`
   `}
 `;
 
+const cardText = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
 type PropsType = {
   index: number;
 };
@@ -60,7 +62,7 @@ const FlipPaper = ({ index }: PropsType) => {
             fontFamily='Playpen Sans'
             fontSize={{ zero: '1.5rem', min: '8vw', max: '4rem' }}
           >
-            {id}
+            {cardText[id]}
           </Typography>
         </Paper>
         <Paper className='back' sx={{ backgroundColor: '#aaaaaa' }}></Paper>

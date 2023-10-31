@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { render, screen, fireEvent, act } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import CardGameProvider from '../../../src/Provider/CardGameProvider';
 import GameCard from '../../../src/pages/Game/GameCard';

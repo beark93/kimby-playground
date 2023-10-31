@@ -2,7 +2,6 @@
 export default {
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: ['<rootDir>/setup.ts'],
   moduleNameMapper: {
     '^@components(.*)$': '<rootDir>/src/components$1',
     '^@pages(.*)$': '<rootDir>/src/pages$1',

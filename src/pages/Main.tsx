@@ -16,7 +16,10 @@ const Main = () => {
         <IconCard title='카드뒤집기' onClick={() => navigate('/game/card')} />
       </Grid>
       <Grid item zero={3}>
-        <IconCard title='etc1' />
+        <IconCard
+          title='데이터그리드'
+          onClick={() => navigate('/custom/data-grid')}
+        />
       </Grid>
       <Grid item zero={3}>
         <IconCard title='etc2' />

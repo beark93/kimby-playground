@@ -40,6 +40,8 @@ type PropsType = {
   onDragStart: (id: string) => void;
   onDragEnd: () => void;
   onDragOver: (e: React.DragEvent<HTMLDivElement>, id: string) => void;
+  onTouchStart: (id: string) => void;
+  onTouchEnd: () => void;
 };
 
 const CustomDataGridList = ({
@@ -50,6 +52,8 @@ const CustomDataGridList = ({
   onDragStart,
   onDragEnd,
   onDragOver,
+  onTouchStart,
+  onTouchEnd,
 }: PropsType) => {
   return (
     <DragGrid
@@ -63,6 +67,8 @@ const CustomDataGridList = ({
       onDragStart={() => onDragStart(row.id)}
       onDragEnd={onDragEnd}
       onDragOver={(e) => onDragOver(e, row.id)}
+      onTouchStart={() => onTouchStart(row.id)}
+      onTouchEnd={onTouchEnd}
     >
       <MiddleGrid item zero={1}>
         <Typography>{row.id}</Typography>

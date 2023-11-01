@@ -11,7 +11,6 @@ const DragGrid = styled(Grid)<GridProps>(({ theme }) => ({
   borderBottom: '1px solid #aaaaaa',
   backgroundColor: '#ececec',
   height: '15.5px',
-  cursor: 'move',
   [theme.breakpoints.between('min', 'max')]: {
     height: '7vw',
   },

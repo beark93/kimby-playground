@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 import { Grid, Box, Typography, Button } from '@mui/material';
 
@@ -117,45 +117,59 @@ const CustomDataGrid = () => {
     setDragId(id);
   };
 
-  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (e.cancelable) {
-      e.preventDefault();
-    }
+  const onTouchMove = useCallback(
+    (e: TouchEvent) => {
+      if (e.cancelable) {
+        e.preventDefault();
+      }
 
-    if (!isEdit || !dataGridBoxRef.current) return;
+      if (!isEdit || !dataGridBoxRef.current) return;
 
-    const nonDraggingLists = [
-      ...dataGridBoxRef.current.querySelectorAll('.draggable'),
-    ];
+      const nonDraggingLists = [
+        ...dataGridBoxRef.current.querySelectorAll('.draggable'),
+      ];
 
-    const targetIndex = nonDraggingLists.reduce(
-      (closest, child, index) => {
-        const box = child.getBoundingClientRect();
-        const offset = e.touches[0].clientY - box.top - box.height / 2;
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, idx: index };
-        } else {
-          return closest;
-        }
-      },
-      { offset: Number.NEGATIVE_INFINITY, idx: -1 }
-    ).idx;
+      const targetIndex = nonDraggingLists.reduce(
+        (closest, child, index) => {
+          const box = child.getBoundingClientRect();
+          const offset = e.touches[0].clientY - box.top - box.height;
+          if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, idx: index };
+          } else {
+            return closest;
+          }
+        },
+        { offset: Number.NEGATIVE_INFINITY, idx: -1 }
+      ).idx;
 
-    if (dragId && targetIndex >= 0 && dragId !== data[targetIndex].id) {
-      setData((state) => {
-        const nonDragState = state.filter((it) => it.id !== dragId);
-        const front = nonDragState.slice(0, targetIndex);
-        const end = nonDragState.slice(targetIndex);
+      if (dragId && targetIndex >= 0) {
+        setData((state) => {
+          const nonDragState = state.filter((it) => it.id !== dragId);
+          const front = nonDragState.slice(0, targetIndex);
+          const end = nonDragState.slice(targetIndex);
 
-        return [...front, state.filter((it) => it.id === dragId)[0], ...end];
-      });
-    }
-  };
+          return [...front, state.filter((it) => it.id === dragId)[0], ...end];
+        });
+      }
+    },
+    [dragId, isEdit]
+  );
 
   const onTouchEnd = () => {
     if (!isEdit) return;
     setDragId(null);
   };
+
+  useEffect(() => {
+    if (isEdit && dragId) {
+      document.addEventListener('touchmove', onTouchMove, {
+        passive: false,
+      });
+    }
+    return () => {
+      document.removeEventListener('touchmove', onTouchMove);
+    };
+  }, [isEdit, dragId, onTouchMove]);
 
   return (
     <>
@@ -200,7 +214,11 @@ const CustomDataGrid = () => {
             <Typography>날짜</Typography>
           </MiddleGrid>
         </Grid>
-        <Box width='100%' ref={dataGridBoxRef} onTouchMove={onTouchMove}>
+        <Box
+          width='100%'
+          ref={dataGridBoxRef}
+          sx={{ cursor: isEdit ? 'move' : 'default' }}
+        >
           {data.map((it, idx) => (
             <CustomDataGridList
               key={`data-grid-list-${it.id}`}

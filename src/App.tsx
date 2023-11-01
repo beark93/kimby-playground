@@ -27,15 +27,6 @@ declare module '@mui/material/styles' {
 
 const theme = responsiveFontSizes(
   createTheme({
-    components: {
-      MuiCssBaseline: {
-        styleOverrides: {
-          body: {
-            'overscroll-behavior-y': 'none',
-          },
-        },
-      },
-    },
     typography: {
       fontFamily: 'Jua',
     },
@@ -63,7 +54,14 @@ const App = () => {
             py: 2,
           }}
         >
-          <GlobalStyles styles={{ body: { backgroundColor: '#ececec' } }} />
+          <GlobalStyles
+            styles={{
+              body: {
+                backgroundColor: '#ececec',
+                'overscroll-behavior-y': 'none',
+              },
+            }}
+          />
           <Box
             sx={{
               width: '100%',

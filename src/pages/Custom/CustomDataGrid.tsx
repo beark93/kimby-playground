@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 import { Grid, Box, Typography, Button } from '@mui/material';
+import { TypographyProps } from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
 
 import BasicHeader from '@components/Header/BasicHeader';
+import RefreshButton from '@components/Buuton/RefeshButton';
 import MiddleTypography from '@components/Typography/MiddleTypography';
 import CustomDataGridList from '@components/Grid/CustomDataGridList';
 import MiddleGrid from '@components/Grid/MiddleGrid';
@@ -46,6 +49,16 @@ const mokData = [
   },
 ];
 
+const CustomTypography = styled(Typography)<TypographyProps>(({ theme }) => ({
+  fontSize: '0.8rem',
+  [theme.breakpoints.between('min', 'max')]: {
+    fontSize: '4vw',
+  },
+  [theme.breakpoints.up('max')]: {
+    fontSize: '1rem',
+  },
+}));
+
 const CustomDataGrid = () => {
   const [data, setData] = useState(mokData);
   const [dragId, setDragId] = useState<string | null>(null);
@@ -54,18 +67,21 @@ const CustomDataGrid = () => {
 
   const dataGridBoxRef = useRef<HTMLDivElement>();
 
+  const onClickRefesh = useCallback(() => {
+    location.reload();
+  }, []);
+
+  // 편집 버튼 클릭
   const onClickEdit = () => {
     setIsEdit((state) => !state);
   };
 
+  // Drag 이벤트 핸들러
   const onDragStart = (id: string) => {
     if (!isEdit) return;
-    setDragId(id);
-  };
 
-  const onDragEnd = () => {
-    if (!isEdit) return;
-    setDragId(null);
+    //  드래그 시작 시 현재 드래그 중인 id 저장
+    setDragId(id);
   };
 
   const onDragOver = (e: React.DragEvent<HTMLDivElement>, id: string) => {
@@ -73,10 +89,13 @@ const CustomDataGrid = () => {
 
     if (!isEdit) return;
 
+    // onDragLeave 시 마지막 오버 id를 확인하기 위한 state
     setDragOverId(id);
 
     if (dragId && dragId !== id) {
       setData((state) => {
+        // 현재 마우스 위치(targetIndex)에 드래그 중인 요소(dragId) 넣기
+        // splice 사용 시 원본배열 변경으로 slice 사용
         const nonDragState = state.filter((it) => it.id !== dragId);
         const targetIndex = nonDragState.findIndex((it) => it.id === id);
         const front = nonDragState.slice(0, targetIndex);
@@ -92,6 +111,7 @@ const CustomDataGrid = () => {
 
     if (!isEdit) return;
 
+    // DataGrid 내부에서 Leave 이벤트 발생 시 무시
     if (
       e.relatedTarget instanceof Element &&
       e.currentTarget.contains(e.relatedTarget)
@@ -112,8 +132,19 @@ const CustomDataGrid = () => {
     }
   };
 
+  const onDragEnd = () => {
+    if (!isEdit) return;
+
+    // 드래그 끝나면 state 초기화
+    setDragId(null);
+    setDragOverId(null);
+  };
+
+  // 터치 이벤트 핸들러
   const onTouchStart = (id: string) => {
     if (!isEdit) return;
+
+    //  터치 시작 시 현재 드래그 중인 id 저장
     setDragId(id);
   };
 
@@ -125,11 +156,12 @@ const CustomDataGrid = () => {
 
       if (!isEdit || !dataGridBoxRef.current) return;
 
-      const nonDraggingLists = [
+      const draggableLists = [
         ...dataGridBoxRef.current.querySelectorAll('.draggable'),
       ];
 
-      const targetIndex = nonDraggingLists.reduce(
+      // 터치중인 위치의 요소 index 찾기
+      const targetIndex = draggableLists.reduce(
         (closest, child, index) => {
           const box = child.getBoundingClientRect();
           const offset = e.touches[0].clientY - box.top - box.height;
@@ -157,9 +189,12 @@ const CustomDataGrid = () => {
 
   const onTouchEnd = () => {
     if (!isEdit) return;
+
+    // 터치 끝나면 state 초기화
     setDragId(null);
   };
 
+  // touchmove 이벤트 리스터 제어 > react onTouchMove 사용 시 화면 스크롤링 문제로 passive 옵션을 주기위해 addEventListener 사용
   useEffect(() => {
     if (isEdit && dragId) {
       document.addEventListener('touchmove', onTouchMove, {
@@ -173,7 +208,7 @@ const CustomDataGrid = () => {
 
   return (
     <>
-      <BasicHeader>
+      <BasicHeader right={<RefreshButton onClick={onClickRefesh} />}>
         <MiddleTypography
           fontSize={{
             zero: '1.2rem',
@@ -190,7 +225,7 @@ const CustomDataGrid = () => {
             color={isEdit ? 'success' : 'primary'}
             onClick={onClickEdit}
           >
-            {isEdit ? '완료' : '편집'}
+            <CustomTypography>{isEdit ? '완료' : '편집'}</CustomTypography>
           </Button>
         </MiddleGrid>
       </Grid>
@@ -202,16 +237,16 @@ const CustomDataGrid = () => {
       >
         <Grid item container sx={{ borderBottom: '3px double black' }}>
           <MiddleGrid item zero={1}>
-            <Typography>번호</Typography>
+            <CustomTypography>번호</CustomTypography>
           </MiddleGrid>
           <MiddleGrid item zero={3}>
-            <Typography>코드</Typography>
+            <CustomTypography>코드</CustomTypography>
           </MiddleGrid>
           <MiddleGrid item zero={5}>
-            <Typography>상태</Typography>
+            <CustomTypography>상태</CustomTypography>
           </MiddleGrid>
           <MiddleGrid item zero={3}>
-            <Typography>날짜</Typography>
+            <CustomTypography>날짜</CustomTypography>
           </MiddleGrid>
         </Grid>
         <Box

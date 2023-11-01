@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Typography, Grid } from '@mui/material';
 import { GridProps } from '@mui/material/Grid';
+import { TypographyProps } from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 
 import MiddleGrid from '@components/Grid/MiddleGrid';
@@ -23,6 +24,16 @@ const DragGrid = styled(Grid)<GridProps>(({ theme }) => ({
   '&.dragging': {
     opacity: '.5',
     border: '2px dashed red',
+  },
+}));
+
+const CustomTypography = styled(Typography)<TypographyProps>(({ theme }) => ({
+  fontSize: '0.8rem',
+  [theme.breakpoints.between('min', 'max')]: {
+    fontSize: '4vw',
+  },
+  [theme.breakpoints.up('max')]: {
+    fontSize: '1rem',
   },
 }));
 
@@ -70,16 +81,16 @@ const CustomDataGridList = ({
       onTouchEnd={onTouchEnd}
     >
       <MiddleGrid item zero={1}>
-        <Typography>{row.id}</Typography>
+        <CustomTypography>{row.id}</CustomTypography>
       </MiddleGrid>
       <MiddleGrid item zero={3}>
-        <Typography>{row.code}</Typography>
+        <CustomTypography>{row.code}</CustomTypography>
       </MiddleGrid>
       <MiddleGrid item zero={5}>
-        <Typography>{row.state}</Typography>
+        <CustomTypography>{row.state}</CustomTypography>
       </MiddleGrid>
       <MiddleGrid item zero={3}>
-        <Typography>{getFormattedDate(row.date)}</Typography>
+        <CustomTypography>{getFormattedDate(row.date)}</CustomTypography>
       </MiddleGrid>
     </DragGrid>
   );

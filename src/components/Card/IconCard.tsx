@@ -10,11 +10,13 @@ type PropsType = {
   onClick?: () => void;
 };
 
-const StyledCard = styled(Card)<CardProps>(() => ({
-  width: '100%',
-  backgroundColor: 'rgba(255, 255, 255, 0)',
-  boxShadow: 'none',
-}));
+const StyledCard = React.memo(
+  styled(Card)<CardProps>(() => ({
+    width: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0)',
+    boxShadow: 'none',
+  }))
+);
 
 const IconCard = ({ title, onClick }: PropsType) => {
   return (

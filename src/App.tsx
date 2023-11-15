@@ -58,7 +58,7 @@ const App = () => {
             styles={{
               body: {
                 backgroundColor: '#ececec',
-                'overscroll-behavior-y': 'none',
+                overscrollBehaviorY: 'none',
               },
             }}
           />

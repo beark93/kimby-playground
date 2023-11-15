@@ -8,34 +8,38 @@ import { styled } from '@mui/material/styles';
 import MiddleGrid from '@components/Grid/MiddleGrid';
 import { getFormattedDate } from '@utils/common';
 
-const DragGrid = styled(Grid)<GridProps>(({ theme }) => ({
-  borderBottom: '1px solid #aaaaaa',
-  backgroundColor: '#ececec',
-  height: '15.5px',
-  [theme.breakpoints.between('min', 'max')]: {
-    height: '7vw',
-  },
-  [theme.breakpoints.up('max')]: {
-    height: '35px',
-  },
-  ':last-child': {
-    borderBottom: 'none',
-  },
-  '&.dragging': {
-    opacity: '.5',
-    border: '2px dashed red',
-  },
-}));
+const DragGrid = React.memo(
+  styled(Grid)<GridProps>(({ theme }) => ({
+    borderBottom: '1px solid #aaaaaa',
+    backgroundColor: '#ececec',
+    height: '15.5px',
+    [theme.breakpoints.between('min', 'max')]: {
+      height: '7vw',
+    },
+    [theme.breakpoints.up('max')]: {
+      height: '35px',
+    },
+    ':last-child': {
+      borderBottom: 'none',
+    },
+    '&.dragging': {
+      opacity: '.5',
+      border: '2px dashed red',
+    },
+  }))
+);
 
-const CustomTypography = styled(Typography)<TypographyProps>(({ theme }) => ({
-  fontSize: '0.8rem',
-  [theme.breakpoints.between('min', 'max')]: {
-    fontSize: '4vw',
-  },
-  [theme.breakpoints.up('max')]: {
-    fontSize: '1rem',
-  },
-}));
+const CustomTypography = React.memo(
+  styled(Typography)<TypographyProps>(({ theme }) => ({
+    fontSize: '0.8rem',
+    [theme.breakpoints.between('min', 'max')]: {
+      fontSize: '4vw',
+    },
+    [theme.breakpoints.up('max')]: {
+      fontSize: '1rem',
+    },
+  }))
+);
 
 type PropsType = {
   row: {
@@ -96,4 +100,4 @@ const CustomDataGridList = ({
   );
 };
 
-export default CustomDataGridList;
+export default React.memo(CustomDataGridList);

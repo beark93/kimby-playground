@@ -6,7 +6,7 @@ import UberSkeleton from '@components/Skeleton/UberSkeleton';
 import LabelProgress from '@components/Progress/LabelProgress';
 import BasicHeader from '@components/Header/BasicHeader';
 import RefreshButton from '@components/Buuton/RefeshButton';
-import { getUberList } from '@api';
+import { getUberList } from '@api/uber';
 import {
   UberType,
   getUberLabel,
@@ -80,20 +80,15 @@ const UberList = () => {
   return (
     <>
       <BasicHeader right={<RefreshButton onClick={onClickRefesh} />}>
-        {useMemo(
-          () => (
-            <Tabs
-              value={ladder}
-              variant='fullWidth'
-              scrollButtons={false}
-              onChange={onChangeLadder}
-            >
-              <Tab value='1' label='Ladder' sx={tabStyle} />
-              <Tab value='2' label='Non Ladder' sx={tabStyle} />
-            </Tabs>
-          ),
-          [ladder, onChangeLadder]
-        )}
+        <Tabs
+          value={ladder}
+          variant='fullWidth'
+          scrollButtons={false}
+          onChange={onChangeLadder}
+        >
+          <Tab value='1' label='Ladder' sx={tabStyle} />
+          <Tab value='2' label='Non Ladder' sx={tabStyle} />
+        </Tabs>
       </BasicHeader>
       <Grid container spacing={4}>
         {isLoading

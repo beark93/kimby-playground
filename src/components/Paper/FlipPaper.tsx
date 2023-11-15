@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 
 import { useCard, useCardGameDispatch } from 'src/Provider/CardGameProvider';
 
-const StyledPaper = styled(Paper)`
+const StyledPaper = React.memo(styled(Paper)`
   ${({ theme }) => `
   cursor: pointer;
   position: relative;
@@ -31,7 +31,7 @@ const StyledPaper = styled(Paper)`
     transform: rotateY(180deg);
   }
   `}
-`;
+`);
 
 const cardText = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 

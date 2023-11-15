@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Grid, LinearProgress, Typography } from '@mui/material';
 import { LinearProgressProps } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
@@ -31,4 +33,4 @@ const LabelProgress = ({ label, value, color }: PropsType) => {
   );
 };
 
-export default LabelProgress;
+export default React.memo(LabelProgress);

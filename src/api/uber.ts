@@ -3,7 +3,7 @@ import axios from 'axios';
 import { UberType } from '@utils/uber';
 
 const d2rApi = axios.create({
-  baseURL: '/api/v1/uber/list',
+  baseURL: '/api/v1/uber',
   timeout: 12000,
   withCredentials: true,
   headers: {
@@ -17,6 +17,6 @@ interface ApiResponse<T> {
   count: number;
 }
 
-export async function getUberList() {
-  return await d2rApi.get<ApiResponse<UberType>>('');
-}
+export const getUberList = async () => {
+  return await d2rApi.get<ApiResponse<UberType>>('list');
+};

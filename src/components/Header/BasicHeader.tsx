@@ -33,4 +33,4 @@ const BasicHeader = ({ children, right }: PropsType) => {
   );
 };
 
-export default BasicHeader;
+export default React.memo(BasicHeader);

@@ -49,15 +49,17 @@ const mokData = [
   },
 ];
 
-const CustomTypography = styled(Typography)<TypographyProps>(({ theme }) => ({
-  fontSize: '0.8rem',
-  [theme.breakpoints.between('min', 'max')]: {
-    fontSize: '4vw',
-  },
-  [theme.breakpoints.up('max')]: {
-    fontSize: '1rem',
-  },
-}));
+const CustomTypography = React.memo(
+  styled(Typography)<TypographyProps>(({ theme }) => ({
+    fontSize: '0.8rem',
+    [theme.breakpoints.between('min', 'max')]: {
+      fontSize: '4vw',
+    },
+    [theme.breakpoints.up('max')]: {
+      fontSize: '1rem',
+    },
+  }))
+);
 
 const CustomDataGrid = () => {
   const [data, setData] = useState(mokData);

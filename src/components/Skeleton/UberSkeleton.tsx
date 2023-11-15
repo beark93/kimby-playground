@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Grid, Skeleton, Typography } from '@mui/material';
 
 const UberSkeleton = () => {
@@ -15,4 +17,4 @@ const UberSkeleton = () => {
   );
 };
 
-export default UberSkeleton;
+export default React.memo(UberSkeleton);

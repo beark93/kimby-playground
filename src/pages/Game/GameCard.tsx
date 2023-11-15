@@ -18,35 +18,39 @@ import {
   useCardGameDispatch,
 } from 'src/Provider/CardGameProvider';
 
-const BackDropTypography = styled(Typography)<TypographyProps>(({ theme }) => ({
-  fontSize: theme.typography.h1.fontSize,
-  [theme.breakpoints.down('max')]: {
-    fontSize: '2rem',
-  },
-}));
+const BackDropTypography = React.memo(
+  styled(Typography)<TypographyProps>(({ theme }) => ({
+    fontSize: theme.typography.h1.fontSize,
+    [theme.breakpoints.down('max')]: {
+      fontSize: '2rem',
+    },
+  }))
+);
 
-const ModalPaper = styled(Paper)<PaperProps>(({ theme }) => ({
-  position: 'absolute' as const,
-  top: '50%',
-  left: '125px',
-  transform: 'translate(-50%, -50%)',
-  border: '2px solid #000',
-  width: '176px',
-  height: '132px',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  [theme.breakpoints.between('min', 'max')]: {
-    left: '50%',
-    width: '70vw',
-    height: '52.5vw',
-  },
-  [theme.breakpoints.up('max')]: {
-    left: '50%',
-    width: '400px',
-    height: '300px',
-  },
-}));
+const ModalPaper = React.memo(
+  styled(Paper)<PaperProps>(({ theme }) => ({
+    position: 'absolute' as const,
+    top: '50%',
+    left: '125px',
+    transform: 'translate(-50%, -50%)',
+    border: '2px solid #000',
+    width: '176px',
+    height: '132px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    [theme.breakpoints.between('min', 'max')]: {
+      left: '50%',
+      width: '70vw',
+      height: '52.5vw',
+    },
+    [theme.breakpoints.up('max')]: {
+      left: '50%',
+      width: '400px',
+      height: '300px',
+    },
+  }))
+);
 
 const GameCard = () => {
   const { cards, gameState } = useCardGameState();

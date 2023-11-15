@@ -22,7 +22,10 @@ const Main = () => {
         />
       </Grid>
       <Grid item zero={3}>
-        <IconCard title='etc2' />
+        <IconCard
+          title='포켓몬도감'
+          onClick={() => navigate('/pokemon/list')}
+        />
       </Grid>
       <Grid item zero={3}>
         <IconCard title='etc3' />

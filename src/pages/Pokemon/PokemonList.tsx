@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 
-import { Grid, Box, Modal, CircularProgress } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import { BoxProps } from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
@@ -14,6 +14,7 @@ import BasicHeader from '@components/Header/BasicHeader';
 import MiddleTypography from '@components/Typography/MiddleTypography';
 import PokemonCard from '@components/Card/PokemonCard';
 import PokemonSkeleton from '@components/Skeleton/PokemonSkeleton';
+import LoadingModal from '@components/Modal/LoadingModal';
 
 import { getPokeList } from '@api/poke';
 import { PokeType } from '@utils/poke';
@@ -129,25 +130,7 @@ const PokemonList = () => {
         </Grid>
         <div style={{ marginBottom: '5px' }} ref={target}></div>
       </ContainerBox>
-      <Modal open={isLoading}>
-        <Box
-          sx={{
-            position: 'absolute' as const,
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <CircularProgress
-            sx={{
-              color: '#fff',
-            }}
-          />
-        </Box>
-      </Modal>
+      <LoadingModal open={isLoading} />
     </>
   );
 };

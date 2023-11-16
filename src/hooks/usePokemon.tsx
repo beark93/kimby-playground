@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { getPokeInfo } from '@api/poke';
 import { PokeInfoType } from '@utils/poke';
 
-const usePokemon = (id: string) => {
+const usePokemon = (id: string, errorHandler: () => void) => {
   const [pokeInfo, setPokeInfo] = useState<PokeInfoType | null>(null);
 
   useEffect(() => {
@@ -17,8 +17,9 @@ const usePokemon = (id: string) => {
       })
       .catch(() => {
         alert('조회에 실패하였습니다.');
+        errorHandler();
       });
-  }, [id]);
+  }, [id, errorHandler]);
 
   return pokeInfo;
 };

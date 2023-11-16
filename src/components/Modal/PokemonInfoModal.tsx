@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Box, Grid, Modal, Skeleton } from '@mui/material';
 import { BoxProps } from '@mui/material/Box';
@@ -108,7 +108,11 @@ type PropsType = {
 };
 
 const PokemonInfoModal = ({ open, id, onClose }: PropsType) => {
-  const pokemon = usePokemon(id);
+  const errorHandler = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
+  const pokemon = usePokemon(id, errorHandler);
 
   return (
     <Modal disableAutoFocus={true} open={open}>

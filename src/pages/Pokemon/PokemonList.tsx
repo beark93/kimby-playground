@@ -15,6 +15,7 @@ import MiddleTypography from '@components/Typography/MiddleTypography';
 import PokemonCard from '@components/Card/PokemonCard';
 import PokemonSkeleton from '@components/Skeleton/PokemonSkeleton';
 import LoadingModal from '@components/Modal/LoadingModal';
+import PokemonInfoModal from '@components/Modal/PokemonInfoModal';
 
 import { getPokeList } from '@api/poke';
 import { PokeType } from '@utils/poke';
@@ -50,8 +51,10 @@ const PokemonSkeletonList = () => {
 const PokemonList = () => {
   const [displayList, setDisplayList] = useState<PokeType[]>([]);
   const [isInit, setIsInit] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
+  const [openLoading, setOpenLoading] = useState(false);
+  const [openPokemonInfo, setOpenPokemonInfo] = useState(false);
+  const [infoPokeId, setInfoPokeId] = useState('');
 
   const offset = useRef(0);
   const root = useRef<HTMLInputElement>(null);
@@ -66,11 +69,11 @@ const PokemonList = () => {
           setIsEnd(true);
         }
         setIsInit(true);
-        setIsLoading(false);
+        setOpenLoading(false);
       })
       .catch(() => {
         setIsEnd(true);
-        setIsLoading(false);
+        setOpenLoading(false);
       });
 
   useEffect(() => {
@@ -81,7 +84,7 @@ const PokemonList = () => {
   const handleObserver = useCallback(async (entries: any) => {
     const target = entries[0];
     if (target.isIntersecting) {
-      setIsLoading(true);
+      setOpenLoading(true);
       offset.current += limit;
       callPokeApi(offset.current, limit);
     }
@@ -104,6 +107,16 @@ const PokemonList = () => {
     }
   }, [handleObserver, isEnd, isInit, options]);
 
+  const onOpenPokeModal = useCallback((id: string) => {
+    setInfoPokeId(id);
+    setOpenPokemonInfo(true);
+  }, []);
+
+  const onClosePokeModal = useCallback(() => {
+    setInfoPokeId('');
+    setOpenPokemonInfo(false);
+  }, []);
+
   return (
     <>
       <BasicHeader>
@@ -123,14 +136,19 @@ const PokemonList = () => {
           ) : (
             displayList.map((it) => (
               <Grid item key={`pokemon-${it.name}`} zero={3}>
-                <PokemonCard pokemon={it} />
+                <PokemonCard pokemon={it} onClick={onOpenPokeModal} />
               </Grid>
             ))
           )}
         </Grid>
         <div style={{ marginBottom: '5px' }} ref={target}></div>
       </ContainerBox>
-      <LoadingModal open={isLoading} />
+      <LoadingModal open={openLoading} />
+      <PokemonInfoModal
+        open={openPokemonInfo}
+        id={infoPokeId}
+        onClose={onClosePokeModal}
+      />
     </>
   );
 };

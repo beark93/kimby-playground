@@ -8,7 +8,7 @@ type PropsType = {
 
 const LoadingModal = ({ open }: PropsType) => {
   return (
-    <Modal open={open}>
+    <Modal disableAutoFocus={true} open={open}>
       <Box
         sx={{
           position: 'absolute' as const,
@@ -30,4 +30,4 @@ const LoadingModal = ({ open }: PropsType) => {
   );
 };
 
-export default LoadingModal;
+export default React.memo(LoadingModal);

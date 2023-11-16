@@ -20,13 +20,13 @@ const StyledCard = React.memo(
 
 type PropsType = {
   pokemon: PokeType;
-  onClick?: () => void;
+  onClick: (id: string) => void;
 };
 
 const PokemonCard = ({ pokemon, onClick }: PropsType) => {
   return (
     <StyledCard>
-      <CardActionArea onClick={onClick}>
+      <CardActionArea onClick={() => onClick(pokemon.id)}>
         <CardMedia
           component='img'
           src={pokemon.image}

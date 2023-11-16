@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { PokeType } from '@utils/poke';
+import { PokeType, PokeInfoType } from '@utils/poke';
 
 const d2rApi = axios.create({
   baseURL: '/api/v1/poke',
@@ -22,4 +22,8 @@ export const getPokeList = async (offset: number, limit: number) => {
   return await d2rApi.get<ApiResponse<PokeType>>(
     `list?offset=${offset}&limit=${limit}`
   );
+};
+
+export const getPokeInfo = async (id: string) => {
+  return await d2rApi.get<PokeInfoType>(`${id}`);
 };

@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import PokemonList from '@pages/pokemon/PokemonList';
+import PokemonList from '@pages/Pokemon/PokemonList';
 
 const PokemonRoutes = {
   path: 'pokemon',

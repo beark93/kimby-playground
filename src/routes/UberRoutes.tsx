@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import UberList from '@pages/uber/UberList';
+import UberList from '@pages/Uber/UberList';
 
 const UberRoutes = {
   path: 'uber',

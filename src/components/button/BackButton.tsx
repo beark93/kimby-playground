@@ -3,7 +3,7 @@ import React from 'react';
 import { IconButton } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
-import MiddleTypography from '@components/typography/MiddleTypography';
+import MiddleTypography from '@components/Typography/MiddleTypography';
 
 type PropsType = {
   onClick: () => void;

@@ -2,10 +2,10 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
 import { Grid, Tabs, Tab } from '@mui/material';
 
-import UberSkeleton from '@components/skeleton/UberSkeleton';
-import LabelProgress from '@components/progress/LabelProgress';
-import BasicHeader from '@components/header/BasicHeader';
-import RefreshButton from '@components/button/RefeshButton';
+import UberSkeleton from '@components/Skeleton/UberSkeleton';
+import LabelProgress from '@components/Progress/LabelProgress';
+import BasicHeader from '@components/Header/BasicHeader';
+import RefreshButton from '@components/Button/RefeshButton';
 import { getUberList } from '@api/uber';
 import {
   UberType,

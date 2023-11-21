@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import { Grid } from '@mui/material';
 
-import BasicHeader from '@components/header/BasicHeader';
-import MiddleTypography from '@components/typography/MiddleTypography';
+import BasicHeader from '@components/Header/BasicHeader';
+import MiddleTypography from '@components/Typography/MiddleTypography';
 
 const GameBall = () => {
   const [ctx, setCtx] = useState<CanvasRenderingContext2D>();

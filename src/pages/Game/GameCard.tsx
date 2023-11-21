@@ -5,11 +5,11 @@ import { TypographyProps } from '@mui/material/Typography';
 import { PaperProps } from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
-import BasicHeader from '@components/header/BasicHeader';
-import MiddleTypography from '@components/typography/MiddleTypography';
-import MiddleGrid from '@components/grid/MiddleGrid';
-import FullBackdrop from '@components/backdrop/FullBackdrop';
-import FlipPaper from '@components/paper/FlipPaper';
+import BasicHeader from '@components/Header/BasicHeader';
+import MiddleTypography from '@components/Typography/MiddleTypography';
+import MiddleGrid from '@components/Grid/MiddleGrid';
+import FullBackdrop from '@components/Backdrop/FullBackdrop';
+import FlipPaper from '@components/Paper/FlipPaper';
 
 import {
   GAME_TIME,

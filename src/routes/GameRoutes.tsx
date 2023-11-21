@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
-import GameCard from '@pages/game/GameCard';
-import GameBall from '@pages/game/GameBall';
+import GameCard from '@pages/Game/GameCard';
+import GameBall from '@pages/Game/GameBall';
 
 import CardGameProvider from 'src/Provider/CardGameProvider';
 

@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { Grid } from '@mui/material';
 
-import BackButton from '@components/Buuton/BackButton';
-import MiddleGrid from '@components/Grid/MiddleGrid';
+import BackButton from '@components/button/BackButton';
+import MiddleGrid from '@components/grid/MiddleGrid';
 
 type PropsType = {
   children: React.ReactNode;

@@ -5,7 +5,7 @@ import { BoxProps } from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 
-import MiddleTypography from '@components/Typography/MiddleTypography';
+import MiddleTypography from '@components/typography/MiddleTypography';
 import usePokemon from '@hooks/usePokemon';
 
 const ContainerBox = React.memo(

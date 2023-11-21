@@ -10,12 +10,12 @@ import { Grid, Box } from '@mui/material';
 import { BoxProps } from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
-import BasicHeader from '@components/Header/BasicHeader';
-import MiddleTypography from '@components/Typography/MiddleTypography';
-import PokemonCard from '@components/Card/PokemonCard';
-import PokemonSkeleton from '@components/Skeleton/PokemonSkeleton';
-import LoadingModal from '@components/Modal/LoadingModal';
-import PokemonInfoModal from '@components/Modal/PokemonInfoModal';
+import BasicHeader from '@components/header/BasicHeader';
+import MiddleTypography from '@components/typography/MiddleTypography';
+import PokemonCard from '@components/card/PokemonCard';
+import PokemonSkeleton from '@components/skeleton/PokemonSkeleton';
+import LoadingModal from '@components/modal/LoadingModal';
+import PokemonInfoModal from '@components/modal/PokemonInfoModal';
 
 import { getPokeList } from '@api/poke';
 import { PokeType } from '@utils/poke';

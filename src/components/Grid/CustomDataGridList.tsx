@@ -5,7 +5,7 @@ import { GridProps } from '@mui/material/Grid';
 import { TypographyProps } from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 
-import MiddleGrid from '@components/Grid/MiddleGrid';
+import MiddleGrid from '@components/grid/MiddleGrid';
 import { getFormattedDate } from '@utils/common';
 
 const DragGrid = React.memo(

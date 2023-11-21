@@ -2,7 +2,7 @@ import React from 'react';
 
 import Typography, { TypographyProps } from '@mui/material/Typography';
 
-import MiddleStack from '@components/Stack/MiddleStack';
+import MiddleStack from '@components/stack/MiddleStack';
 
 const MiddleTypography = (props: TypographyProps) => {
   return (

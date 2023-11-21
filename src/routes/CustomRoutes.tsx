@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import CustomDataGrid from '@pages/Custom/CustomDataGrid';
+import CustomDataGrid from '@pages/custom/CustomDataGrid';
 
 const CustomRoutes = {
   path: 'custom',

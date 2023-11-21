@@ -4,11 +4,11 @@ import { Grid, Box, Typography, Button } from '@mui/material';
 import { TypographyProps } from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 
-import BasicHeader from '@components/Header/BasicHeader';
-import RefreshButton from '@components/Buuton/RefeshButton';
-import MiddleTypography from '@components/Typography/MiddleTypography';
-import CustomDataGridList from '@components/Grid/CustomDataGridList';
-import MiddleGrid from '@components/Grid/MiddleGrid';
+import BasicHeader from '@components/header/BasicHeader';
+import RefreshButton from '@components/button/RefeshButton';
+import MiddleTypography from '@components/typography/MiddleTypography';
+import CustomDataGridList from '@components/grid/CustomDataGridList';
+import MiddleGrid from '@components/grid/MiddleGrid';
 
 const mokData = [
   {

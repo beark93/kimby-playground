@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Grid } from '@mui/material';
 
-import IconCard from '@components/Card/IconCard';
+import IconCard from '@components/card/IconCard';
 
 const Main = () => {
   const navigate = useNavigate();

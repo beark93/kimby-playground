@@ -28,7 +28,7 @@ const Main = () => {
         />
       </Grid>
       <Grid item zero={3}>
-        <IconCard title='etc3' />
+        <IconCard title='공튀기기' onClick={() => navigate('/game/ball')} />
       </Grid>
     </Grid>
   );

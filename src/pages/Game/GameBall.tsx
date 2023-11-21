@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 import { Grid } from '@mui/material';
 
@@ -6,9 +6,41 @@ import BasicHeader from '@components/Header/BasicHeader';
 import MiddleTypography from '@components/Typography/MiddleTypography';
 
 const GameBall = () => {
-  const [ctx, setCtx] = useState<CanvasRenderingContext2D>();
+  const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const x = useRef<number | null>(null);
+  const y = useRef<number | null>(null);
+
+  const drawBall = useCallback(() => {
+    if (!ctx || !canvasRef.current || !x.current || !y.current) return;
+
+    const uniWidth = canvasRef.current.clientWidth / 100;
+
+    ctx.beginPath();
+    ctx.arc(x.current, y.current, uniWidth * 2, 0, Math.PI * 2);
+    ctx.fillStyle = '#0095DD';
+    ctx.fill();
+    ctx.closePath();
+  }, [ctx]);
+
+  const draw = useCallback(() => {
+    if (!ctx || !canvasRef.current) return;
+
+    const uniWidth = canvasRef.current.clientWidth / 100;
+    const uniHeight = canvasRef.current.clientHeight / 100;
+
+    if (!x.current || !y.current) {
+      x.current = canvasRef.current.clientWidth / 2;
+      y.current = canvasRef.current.clientHeight - uniHeight * 9;
+    }
+
+    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    drawBall();
+    x.current += uniWidth * 0.4;
+    y.current += -uniWidth * 0.4;
+  }, [ctx, drawBall]);
 
   useEffect(() => {
     if (canvasRef.current && containerRef.current) {
@@ -20,48 +52,11 @@ const GameBall = () => {
       canvas.style.border = '2px solid black';
 
       const context = canvas.getContext('2d');
-      if (context) {
-        const uniWidth = canvas.width * 0.01;
-        const uniHeight = canvas.height * 0.01;
-
-        context.beginPath();
-        context.rect(
-          uniWidth * 4,
-          uniHeight * 12,
-          uniWidth * 10,
-          uniHeight * 15
-        );
-        context.fillStyle = '#FF0000';
-        context.fill();
-        context.closePath();
-
-        context.beginPath();
-        context.arc(
-          uniWidth * 50,
-          uniHeight * 50,
-          uniWidth * 4,
-          0,
-          Math.PI * 2,
-          false
-        );
-        context.fillStyle = 'green';
-        context.fill();
-        context.closePath();
-
-        context.beginPath();
-        context.rect(
-          uniWidth * 32,
-          uniHeight * 3,
-          uniWidth * 20,
-          uniHeight * 12
-        );
-        context.strokeStyle = 'rgba(0, 0, 255, 0.5)';
-        context.stroke();
-        context.closePath();
-      }
-      // setCtx();
+      setCtx(context);
     }
-  }, []);
+
+    setInterval(draw, 10);
+  }, [draw]);
 
   return (
     <>

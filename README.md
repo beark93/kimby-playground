@@ -38,3 +38,9 @@
 - Pokemon 띠부씰 형태로 포켓몬 리스트 출력
 - (현재) Infinite Scroll 구현
 - (예정) 각 포켓몬 클릭 / 검색 시 상세 정보 Modal 출력
+
+## 공튀기기 게임
+
+### 📝 설명
+
+- MDN Canvas Tutorial 에 따라 공튀기기 게임 개발

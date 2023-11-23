@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 import GameCard from '@pages/Game/GameCard';
-import GameBall from '@pages/Game/GameBall';
+import GameBreakOut from '@pages/Game/GameBreakOut';
 
 import CardGameProvider from 'src/Provider/CardGameProvider';
 
@@ -18,8 +18,8 @@ const GameRoutes = {
       ),
     },
     {
-      path: 'ball',
-      element: <GameBall />,
+      path: 'break-out',
+      element: <GameBreakOut />,
     },
   ],
 };

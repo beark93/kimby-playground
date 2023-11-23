@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
-import { Grid, Button } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import BasicHeader from '@components/Header/BasicHeader';
 import MiddleTypography from '@components/Typography/MiddleTypography';
-import FullBackdrop from '@components/Backdrop/FullBackdrop';
 import GameStartModal from '@components/Modal/GameStartModal';
 import GameEndModal from '@components/Modal/GameEndModal';
 

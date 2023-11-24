@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, TextField, Button } from '@mui/material';
 import { BoxProps } from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
@@ -19,10 +19,20 @@ import PokemonInfoModal from '@components/Modal/PokemonInfoModal';
 
 import { getPokeList } from '@api/poke';
 import { PokeType } from '@utils/poke';
+import pokeJson from 'src/assets/json/poke_name.json';
+
+const InputBox = React.memo(
+  styled(Box)<BoxProps>(() => ({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  }))
+);
 
 const ContainerBox = React.memo(
   styled(Box)<BoxProps>(() => ({
-    height: '80vh',
+    height: '75vh',
     overflow: 'auto',
     '&::-webkit-scrollbar': {
       width: '5px',
@@ -55,6 +65,7 @@ const PokemonList = () => {
   const [openLoading, setOpenLoading] = useState(false);
   const [openPokemonInfo, setOpenPokemonInfo] = useState(false);
   const [infoPokeId, setInfoPokeId] = useState('');
+  const [search, setSearch] = useState('');
 
   const offset = useRef(0);
   const root = useRef<HTMLInputElement>(null);
@@ -117,6 +128,42 @@ const PokemonList = () => {
     setOpenPokemonInfo(false);
   }, []);
 
+  // 검색
+  const onChangeSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.target.value);
+    },
+    []
+  );
+
+  const onClickSearch = useCallback(() => {
+    if (!search) {
+      alert('검색어를 입력해 주세요.');
+      return;
+    }
+
+    let id = search;
+    if (!parseInt(search)) {
+      const filteredJson = pokeJson.filter((it) => it.name === search);
+
+      if (filteredJson.length > 0) {
+        id = filteredJson[0].pokemon_species_id.toString();
+      }
+      onOpenPokeModal(id.toString());
+    } else {
+      onOpenPokeModal(id);
+    }
+  }, [onOpenPokeModal, search]);
+
+  const onKeyDownSearch = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.keyCode === 13) {
+        onClickSearch();
+      }
+    },
+    [onClickSearch]
+  );
+
   return (
     <>
       <BasicHeader>
@@ -129,6 +176,24 @@ const PokemonList = () => {
           Pokemon
         </MiddleTypography>
       </BasicHeader>
+      <InputBox mb={2}>
+        <TextField
+          label='번호 or 이름'
+          size='small'
+          variant='outlined'
+          value={search}
+          onChange={onChangeSearch}
+          onKeyDown={onKeyDownSearch}
+        />
+        <Button
+          variant='outlined'
+          color='inherit'
+          sx={{ ml: 1 }}
+          onClick={onClickSearch}
+        >
+          검색
+        </Button>
+      </InputBox>
       <ContainerBox ref={root}>
         <Grid container spacing={4}>
           {!isInit ? (

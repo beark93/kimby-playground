@@ -23,7 +23,7 @@ const ContainerBox = React.memo(
     },
     backgroundColor: '#fff',
     border: '2px solid #000',
-    padding: '2%',
+    padding: '2vh',
   }))
 );
 
@@ -97,6 +97,28 @@ const TypeBox = React.memo(
     },
     '&.fairy': {
       backgroundColor: '#dab4d4',
+    },
+  }))
+);
+
+const DescriptionBox = React.memo(
+  styled(Box)<BoxProps>(({ theme }) => ({
+    position: 'relative',
+    width: '100%',
+    border: '1px solid #ececec',
+    borderRadius: '10px',
+    padding: '10px 5px',
+    fontSize: '0.5rem',
+    height: '60px',
+    [theme.breakpoints.between('min', 'max')]: {
+      fontSize: '3vw',
+      height: '20vw',
+      padding: '3vw 1.5vw',
+    },
+    [theme.breakpoints.up('max')]: {
+      fontSize: '1.2rem',
+      height: '120px',
+      padding: '20px 10px',
     },
   }))
 );
@@ -178,6 +200,16 @@ const PokemonInfoModal = ({ open, id, onClose }: PropsType) => {
                 </TypeBox>
               ))}
             </Grid>
+            <Grid
+              item
+              zero={12}
+              display='flex'
+              flexDirection='row'
+              justifyContent='center'
+              p={1}
+            >
+              <DescriptionBox>{pokemon.description}</DescriptionBox>
+            </Grid>
           </Grid>
         ) : (
           <Grid container>
@@ -242,6 +274,18 @@ const PokemonInfoModal = ({ open, id, onClose }: PropsType) => {
                 width='20%'
                 sx={{ height: { zero: '19px', min: '6vw', max: '34px' } }}
               />
+            </Grid>
+            <Grid
+              item
+              zero={12}
+              display='flex'
+              flexDirection='row'
+              justifyContent='center'
+              p={1}
+            >
+              <DescriptionBox>
+                <Skeleton variant='rounded' />
+              </DescriptionBox>
             </Grid>
           </Grid>
         )}

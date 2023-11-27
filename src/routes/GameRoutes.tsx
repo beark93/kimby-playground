@@ -3,8 +3,12 @@ import { Outlet } from 'react-router-dom';
 
 import Loading from '@pages/Loading';
 
-const GameCard = React.lazy(() => import('@pages/Game/GameCard'));
-const GameBreakOut = React.lazy(() => import('@pages/Game/GameBreakOut'));
+const GameCard = React.lazy(
+  () => import(/*webpackChunkName: "gameCard"*/ '@pages/Game/GameCard')
+);
+const GameBreakOut = React.lazy(
+  () => import(/*webpackChunkName: "gameBreakOut"*/ '@pages/Game/GameBreakOut')
+);
 
 import CardGameProvider from 'src/Provider/CardGameProvider';
 

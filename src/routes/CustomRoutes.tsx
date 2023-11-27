@@ -3,7 +3,12 @@ import { Outlet } from 'react-router-dom';
 
 import Loading from '@pages/Loading';
 
-const CustomDataGrid = React.lazy(() => import('@pages/Custom/CustomDataGrid'));
+const CustomDataGrid = React.lazy(
+  () =>
+    import(
+      /*webpackChunkName: "customDataGrid"*/ '@pages/Custom/CustomDataGrid'
+    )
+);
 
 const CustomRoutes = {
   path: 'custom',

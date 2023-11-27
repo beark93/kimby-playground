@@ -4,7 +4,7 @@ import { Grid } from '@mui/material';
 
 import IconCard from '@components/Card/IconCard';
 
-const Main = () => {
+const Home = () => {
   const navigate = useNavigate();
 
   return (
@@ -37,4 +37,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Home;

@@ -3,8 +3,8 @@ import { Outlet } from 'react-router-dom';
 
 import Loading from '@pages/Loading';
 
-const Main = React.lazy(
-  () => import(/*webpackChunkName: "main"*/ '@pages/Main')
+const Home = React.lazy(
+  () => import(/*webpackChunkName: "home"*/ '@pages/Home')
 );
 
 const MainRoutes = {
@@ -15,7 +15,7 @@ const MainRoutes = {
       path: '/',
       element: (
         <React.Suspense fallback={<Loading />}>
-          <Main />
+          <Home />
         </React.Suspense>
       ),
     },

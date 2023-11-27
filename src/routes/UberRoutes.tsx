@@ -1,6 +1,9 @@
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import UberList from '@pages/Uber/UberList';
+import Loading from '@pages/Loading';
+
+const UberList = React.lazy(() => import('@pages/Uber/UberList'));
 
 const UberRoutes = {
   path: 'uber',
@@ -8,7 +11,11 @@ const UberRoutes = {
   children: [
     {
       path: 'list',
-      element: <UberList />,
+      element: (
+        <React.Suspense fallback={<Loading />}>
+          <UberList />
+        </React.Suspense>
+      ),
     },
   ],
 };

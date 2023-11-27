@@ -1,6 +1,9 @@
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import CustomDataGrid from '@pages/Custom/CustomDataGrid';
+import Loading from '@pages/Loading';
+
+const CustomDataGrid = React.lazy(() => import('@pages/Custom/CustomDataGrid'));
 
 const CustomRoutes = {
   path: 'custom',
@@ -8,7 +11,11 @@ const CustomRoutes = {
   children: [
     {
       path: 'data-grid',
-      element: <CustomDataGrid />,
+      element: (
+        <React.Suspense fallback={<Loading />}>
+          <CustomDataGrid />
+        </React.Suspense>
+      ),
     },
   ],
 };

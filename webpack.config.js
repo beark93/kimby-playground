@@ -49,7 +49,9 @@ export default function config(_, argv) {
     },
     output: {
       publicPath: '/',
+      filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
+      clean: true,
     },
     resolve: {
       modules: [path.resolve(__dirname, 'src'), 'node_modules'],

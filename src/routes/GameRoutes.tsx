@@ -1,7 +1,10 @@
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import GameCard from '@pages/Game/GameCard';
-import GameBreakOut from '@pages/Game/GameBreakOut';
+import Loading from '@pages/Loading';
+
+const GameCard = React.lazy(() => import('@pages/Game/GameCard'));
+const GameBreakOut = React.lazy(() => import('@pages/Game/GameBreakOut'));
 
 import CardGameProvider from 'src/Provider/CardGameProvider';
 
@@ -12,14 +15,20 @@ const GameRoutes = {
     {
       path: 'card',
       element: (
-        <CardGameProvider>
-          <GameCard />
-        </CardGameProvider>
+        <React.Suspense fallback={<Loading />}>
+          <CardGameProvider>
+            <GameCard />
+          </CardGameProvider>
+        </React.Suspense>
       ),
     },
     {
       path: 'break-out',
-      element: <GameBreakOut />,
+      element: (
+        <React.Suspense fallback={<Loading />}>
+          <GameBreakOut />
+        </React.Suspense>
+      ),
     },
   ],
 };

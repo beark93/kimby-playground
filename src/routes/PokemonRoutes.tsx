@@ -1,6 +1,9 @@
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import PokemonList from '@pages/Pokemon/PokemonList';
+import Loading from '@pages/Loading';
+
+const PokemonList = React.lazy(() => import('@pages/Pokemon/PokemonList'));
 
 const PokemonRoutes = {
   path: 'pokemon',
@@ -8,7 +11,11 @@ const PokemonRoutes = {
   children: [
     {
       path: 'list',
-      element: <PokemonList />,
+      element: (
+        <React.Suspense fallback={<Loading />}>
+          <PokemonList />
+        </React.Suspense>
+      ),
     },
   ],
 };

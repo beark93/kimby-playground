@@ -1,6 +1,9 @@
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import Main from '@pages/Main';
+import Loading from '@pages/Loading';
+
+const Main = React.lazy(() => import('@pages/Main'));
 
 const MainRoutes = {
   path: '/',
@@ -8,7 +11,11 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <Main />,
+      element: (
+        <React.Suspense fallback={<Loading />}>
+          <Main />
+        </React.Suspense>
+      ),
     },
   ],
 };

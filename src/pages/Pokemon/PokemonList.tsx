@@ -50,6 +50,40 @@ const ContainerBox = React.memo(
 
 const limit = 40;
 
+const InputArea = ({
+  search,
+  onChange,
+  onKeyDown,
+  onClick,
+}: {
+  search: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+  onClick: () => void;
+}) => {
+  return (
+    <InputBox mb={2}>
+      <TextField
+        label='번호 or 이름'
+        size='small'
+        variant='outlined'
+        value={search}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+      />
+      <Button
+        variant='outlined'
+        color='inherit'
+        sx={{ ml: 1 }}
+        onClick={onClick}
+      >
+        검색
+      </Button>
+    </InputBox>
+  );
+};
+const MemoizedInputArea = React.memo(InputArea);
+
 const PokemonSkeletonList = () => {
   return new Array(4).fill(0).map((_, idx) => (
     <Grid item container key={`pokemon-skeleton-${idx}`} zero={3}>
@@ -57,6 +91,22 @@ const PokemonSkeletonList = () => {
     </Grid>
   ));
 };
+const MemoizedPokemonSkeletonList = React.memo(PokemonSkeletonList);
+
+const PokemonCardList = ({
+  pokemon,
+  onClick,
+}: {
+  pokemon: PokeType;
+  onClick: (id: string) => void;
+}) => {
+  return (
+    <Grid item key={`pokemon-${pokemon.name}`} zero={3}>
+      <PokemonCard pokemon={pokemon} onClick={onClick} />
+    </Grid>
+  );
+};
+const MemoizedPokemonCardList = React.memo(PokemonCardList);
 
 const PokemonList = () => {
   const [displayList, setDisplayList] = useState<PokeType[]>([]);
@@ -179,33 +229,23 @@ const PokemonList = () => {
           Pokemon
         </MiddleTypography>
       </BasicHeader>
-      <InputBox mb={2}>
-        <TextField
-          label='번호 or 이름'
-          size='small'
-          variant='outlined'
-          value={search}
-          onChange={onChangeSearch}
-          onKeyDown={onKeyDownSearch}
-        />
-        <Button
-          variant='outlined'
-          color='inherit'
-          sx={{ ml: 1 }}
-          onClick={onClickSearch}
-        >
-          검색
-        </Button>
-      </InputBox>
+      <MemoizedInputArea
+        search={search}
+        onChange={onChangeSearch}
+        onKeyDown={onKeyDownSearch}
+        onClick={onClickSearch}
+      />
       <ContainerBox ref={root}>
         <Grid container spacing={4}>
           {!isInit ? (
-            <PokemonSkeletonList />
+            <MemoizedPokemonSkeletonList />
           ) : (
             displayList.map((it) => (
-              <Grid item key={`pokemon-${it.name}`} zero={3}>
-                <PokemonCard pokemon={it} onClick={onOpenPokeModal} />
-              </Grid>
+              <MemoizedPokemonCardList
+                key={`pokemon-${it.name}`}
+                pokemon={it}
+                onClick={onOpenPokeModal}
+              />
             ))
           )}
         </Grid>

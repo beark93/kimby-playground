@@ -50,6 +50,22 @@ const ContainerBox = React.memo(
 
 const limit = 40;
 
+const Header = () => {
+  return (
+    <BasicHeader>
+      <MiddleTypography
+        fontSize={{
+          zero: '1.2rem',
+          max: 'h4.fontSize',
+        }}
+      >
+        Pokemon
+      </MiddleTypography>
+    </BasicHeader>
+  );
+};
+const MemoizedHeader = React.memo(Header);
+
 const InputArea = ({
   search,
   onChange,
@@ -219,16 +235,7 @@ const PokemonList = () => {
 
   return (
     <>
-      <BasicHeader>
-        <MiddleTypography
-          fontSize={{
-            zero: '1.2rem',
-            max: 'h4.fontSize',
-          }}
-        >
-          Pokemon
-        </MiddleTypography>
-      </BasicHeader>
+      <MemoizedHeader />
       <MemoizedInputArea
         search={search}
         onChange={onChangeSearch}

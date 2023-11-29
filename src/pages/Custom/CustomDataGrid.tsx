@@ -61,6 +61,49 @@ const CustomTypography = React.memo(
   }))
 );
 
+const Header = () => {
+  const onClickRefesh = useCallback(() => {
+    location.reload();
+  }, []);
+
+  return (
+    <BasicHeader right={<RefreshButton onClick={onClickRefesh} />}>
+      <MiddleTypography
+        fontSize={{
+          zero: '1.2rem',
+          max: 'h4.fontSize',
+        }}
+      >
+        Data Grid
+      </MiddleTypography>
+    </BasicHeader>
+  );
+};
+const MemoizedHeader = React.memo(Header);
+
+const ButtonArea = ({
+  isEdit,
+  onClick,
+}: {
+  isEdit: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <Grid container mb={1}>
+      <MiddleGrid item zero={12} sx={{ justifyContent: 'flex-end' }}>
+        <Button
+          variant='contained'
+          color={isEdit ? 'success' : 'primary'}
+          onClick={onClick}
+        >
+          <CustomTypography>{isEdit ? '완료' : '편집'}</CustomTypography>
+        </Button>
+      </MiddleGrid>
+    </Grid>
+  );
+};
+const MemoizedButtonArea = React.memo(ButtonArea);
+
 const CustomDataGrid = () => {
   const [data, setData] = useState(mokData);
   const [dragId, setDragId] = useState<string | null>(null);
@@ -68,10 +111,6 @@ const CustomDataGrid = () => {
   const [isEdit, setIsEdit] = useState(false);
 
   const dataGridBoxRef = useRef<HTMLDivElement>();
-
-  const onClickRefesh = useCallback(() => {
-    location.reload();
-  }, []);
 
   // 편집 버튼 클릭
   const onClickEdit = () => {
@@ -210,27 +249,8 @@ const CustomDataGrid = () => {
 
   return (
     <>
-      <BasicHeader right={<RefreshButton onClick={onClickRefesh} />}>
-        <MiddleTypography
-          fontSize={{
-            zero: '1.2rem',
-            max: 'h4.fontSize',
-          }}
-        >
-          Data Grid
-        </MiddleTypography>
-      </BasicHeader>
-      <Grid container mb={1}>
-        <MiddleGrid item zero={12} sx={{ justifyContent: 'flex-end' }}>
-          <Button
-            variant='contained'
-            color={isEdit ? 'success' : 'primary'}
-            onClick={onClickEdit}
-          >
-            <CustomTypography>{isEdit ? '완료' : '편집'}</CustomTypography>
-          </Button>
-        </MiddleGrid>
-      </Grid>
+      <MemoizedHeader />
+      <MemoizedButtonArea isEdit={isEdit} onClick={onClickEdit} />
       <Grid
         container
         zero={12}

@@ -32,6 +32,22 @@ const BackDropTypography = React.memo(
   }))
 );
 
+const Header = () => {
+  return (
+    <BasicHeader>
+      <MiddleTypography
+        fontSize={{
+          zero: '1.2rem',
+          max: 'h4.fontSize',
+        }}
+      >
+        Card Game
+      </MiddleTypography>
+    </BasicHeader>
+  );
+};
+const MemoizedHeader = React.memo(Header);
+
 // 카드영역 Backdrop
 const CardBackdrop = () => {
   const { gameState } = useCardGameState();
@@ -98,16 +114,7 @@ const GameCard = () => {
 
   return (
     <>
-      <BasicHeader>
-        <MiddleTypography
-          fontSize={{
-            zero: '1.2rem',
-            max: 'h4.fontSize',
-          }}
-        >
-          Card Game
-        </MiddleTypography>
-      </BasicHeader>
+      <MemoizedHeader />
       <Typography
         align='center'
         fontSize={{

@@ -28,6 +28,31 @@ const tabStyle = {
   },
 };
 
+const Header = ({
+  ladder,
+  onChange,
+  onClick,
+}: {
+  ladder: string;
+  onChange: (_: React.SyntheticEvent, newLadder: string) => void;
+  onClick: () => void;
+}) => {
+  return (
+    <BasicHeader right={<RefreshButton onClick={onClick} />}>
+      <Tabs
+        value={ladder}
+        variant='fullWidth'
+        scrollButtons={false}
+        onChange={onChange}
+      >
+        <Tab value='1' label='Ladder' sx={tabStyle} />
+        <Tab value='2' label='Non Ladder' sx={tabStyle} />
+      </Tabs>
+    </BasicHeader>
+  );
+};
+const MemoizedHeader = React.memo(Header);
+
 const UberList = () => {
   const [displayList, setDisplayList] = useState<UberType[]>(defaultList);
   const [data, setData] = useState<UberType[]>([]);
@@ -79,17 +104,11 @@ const UberList = () => {
 
   return (
     <>
-      <BasicHeader right={<RefreshButton onClick={onClickRefesh} />}>
-        <Tabs
-          value={ladder}
-          variant='fullWidth'
-          scrollButtons={false}
-          onChange={onChangeLadder}
-        >
-          <Tab value='1' label='Ladder' sx={tabStyle} />
-          <Tab value='2' label='Non Ladder' sx={tabStyle} />
-        </Tabs>
-      </BasicHeader>
+      <MemoizedHeader
+        ladder={ladder}
+        onChange={onChangeLadder}
+        onClick={onClickRefesh}
+      />
       <Grid container spacing={4}>
         {isLoading
           ? defaultList.map((_, idx) => (

@@ -38,6 +38,22 @@ const defaultBricks = [
   ],
 ];
 
+const Header = () => {
+  return (
+    <BasicHeader>
+      <MiddleTypography
+        fontSize={{
+          zero: '1.2rem',
+          max: 'h4.fontSize',
+        }}
+      >
+        벽돌깨기 게임
+      </MiddleTypography>
+    </BasicHeader>
+  );
+};
+const MemoizedHeader = React.memo(Header);
+
 const GameBreakOut = () => {
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [state, setState] = useState('READY');
@@ -210,16 +226,7 @@ const GameBreakOut = () => {
 
   return (
     <>
-      <BasicHeader>
-        <MiddleTypography
-          fontSize={{
-            zero: '1.2rem',
-            max: 'h4.fontSize',
-          }}
-        >
-          벽돌깨기 게임
-        </MiddleTypography>
-      </BasicHeader>
+      <MemoizedHeader />
       <Grid
         container
         ref={containerRef}

@@ -4,8 +4,8 @@ import { Grid } from '@mui/material';
 
 import BasicHeader from '@components/Header/BasicHeader';
 import MiddleTypography from '@components/Typography/MiddleTypography';
-import GameStartModal from '@components/Modal/GameStartModal';
-import GameEndModal from '@components/Modal/GameEndModal';
+import GameBreakOutStartModal from '@components/Modal/GameBreakOutStartModal';
+import GameBreakOutEndModal from '@components/Modal/GameBreakOutEndModal';
 
 import useBall from '@hooks/useBall';
 import usePaddle from '@hooks/usePaddle';
@@ -56,6 +56,7 @@ const GameBreakOut = () => {
     canvasRef.current
   );
 
+  // 벽돌 그리기
   const drawBricks = useCallback(() => {
     if (!ctx || !canvasRef.current) return;
 
@@ -66,6 +67,7 @@ const GameBreakOut = () => {
     const uniWidth = canvasRef.current.clientWidth / 100;
     const uniHeight = canvasRef.current.clientHeight / 100;
 
+    // 벽돌 크기 및 배치 기본값 설정
     const brickWidth = uniWidth * 15;
     const brickHeight = uniHeight * 6;
     const brickPadding = uniWidth * 3;
@@ -93,6 +95,7 @@ const GameBreakOut = () => {
     });
   }, [ctx]);
 
+  // 공이 Paddle 에 닿았는지 바닥에 닿았는지 판단하는 function
   const touchPaddleDetection = useCallback(
     (x: number | null, y: number | null, paddleX: number | null) => {
       if (!ctx || !canvasRef.current) return;
@@ -112,6 +115,7 @@ const GameBreakOut = () => {
     [ctx, boundPaddle]
   );
 
+  // 공이 벽돌에 맞았는지 판단하는 function
   const collisionDetection = useCallback(
     (x: number | null, y: number | null) => {
       if (!ctx || !canvasRef.current) return;
@@ -142,6 +146,7 @@ const GameBreakOut = () => {
     [ctx, boundPaddle]
   );
 
+  // 공, Paddle, 벽돌을 cavas 에 그리는 function
   const draw = useCallback(() => {
     if (!ctx || !canvasRef.current) return;
 
@@ -165,11 +170,13 @@ const GameBreakOut = () => {
     collisionDetection,
   ]);
 
+  // 게임 시작 (draw func 10ms 마다 실행)
   const onClickStart = useCallback(() => {
     setState('START');
     drawInterval.current = setInterval(draw, 10);
   }, [draw]);
 
+  // 페이지 접근 시 canvas 그리기
   useEffect(() => {
     if (canvasRef.current && containerRef.current) {
       const container = containerRef.current;
@@ -184,6 +191,7 @@ const GameBreakOut = () => {
     }
   }, []);
 
+  // 키보드 좌우 입력 EventListener
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown, false);
     document.addEventListener('keyup', handleKeyUp, false);
@@ -224,8 +232,11 @@ const GameBreakOut = () => {
       >
         <canvas ref={canvasRef}></canvas>
       </Grid>
-      <GameStartModal open={state === 'READY'} handleStart={onClickStart} />
-      <GameEndModal state={state} />
+      <GameBreakOutStartModal
+        open={state === 'READY'}
+        handleStart={onClickStart}
+      />
+      <GameBreakOutEndModal state={state} />
     </>
   );
 };

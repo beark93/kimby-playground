@@ -21,7 +21,7 @@ type PropsType = {
   handleStart: () => void;
 };
 
-const GameStartModal = ({ open, handleStart }: PropsType) => {
+const GameBreakOutStartModal = ({ open, handleStart }: PropsType) => {
   return (
     <Modal disableAutoFocus={true} open={open}>
       <ContainerBox>
@@ -43,4 +43,4 @@ const GameStartModal = ({ open, handleStart }: PropsType) => {
   );
 };
 
-export default React.memo(GameStartModal);
+export default React.memo(GameBreakOutStartModal);

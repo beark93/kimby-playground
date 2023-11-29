@@ -29,7 +29,7 @@ type PropsType = {
   state: string;
 };
 
-const GameEndModal = ({ state }: PropsType) => {
+const GameBreakOutEndModal = ({ state }: PropsType) => {
   const handleRetry = () => {
     location.reload();
   };
@@ -68,4 +68,4 @@ const GameEndModal = ({ state }: PropsType) => {
   );
 };
 
-export default React.memo(GameEndModal);
+export default React.memo(GameBreakOutEndModal);

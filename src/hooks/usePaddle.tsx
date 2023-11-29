@@ -4,11 +4,17 @@ const usePaddle = (
   ctx: CanvasRenderingContext2D | null,
   canvas: HTMLCanvasElement | null
 ) => {
+  /**
+   * paddleX: paddle의 x축 좌표
+   * rightPress: 키보드 우 방향키 활성화 여부
+   * leftPress: 키보드 좌 방향키 활성화 여부
+   */
   const paddleX = useRef<number | null>(null);
 
   const rightPress = useRef(false);
   const leftPress = useRef(false);
 
+  // paddle 그리는 function
   const drawPaddle = useCallback(() => {
     if (!ctx || !canvas) return;
 
@@ -18,6 +24,7 @@ const usePaddle = (
     const paddleWidth = uniWidth * 15;
     const paddleHeight = uniHeight * 3;
 
+    // 최초 paddle 위치
     if (!paddleX.current) {
       paddleX.current = (canvas.clientWidth - paddleWidth) / 2;
     }
@@ -33,6 +40,7 @@ const usePaddle = (
     ctx.fill();
     ctx.closePath();
 
+    // 다음 paddle 위치 미리셋팅
     if (
       rightPress.current &&
       paddleX.current < canvas.clientWidth - paddleWidth
@@ -43,6 +51,7 @@ const usePaddle = (
     }
   }, [ctx, canvas]);
 
+  // 키보드 좌우 버튼 클릭 시 paddle 이동을 위한 function
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.keyCode === 39) {
       rightPress.current = true;

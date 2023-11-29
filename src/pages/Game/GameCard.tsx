@@ -32,6 +32,7 @@ const BackDropTypography = React.memo(
   }))
 );
 
+/*============================== Header ==============================*/
 const Header = () => {
   return (
     <BasicHeader>
@@ -48,6 +49,26 @@ const Header = () => {
 };
 const MemoizedHeader = React.memo(Header);
 
+/*============================== Timer ==============================*/
+const GameTimer = () => {
+  const { gameTimer } = useCardGameTimer();
+
+  return (
+    <Typography
+      align='center'
+      fontSize={{
+        zero: '1.2rem',
+        max: 'h4.fontSize',
+      }}
+      gutterBottom
+    >
+      {gameTimer.toFixed(2)}
+    </Typography>
+  );
+};
+const MemoizedGameTimer = React.memo(GameTimer);
+
+/*============================== Card Area ==============================*/
 // 카드영역 Backdrop
 const CardBackdrop = () => {
   const { gameState } = useCardGameState();
@@ -110,21 +131,10 @@ const CardAreaGrid = () => {
 const MemoizedCardAreaGrid = React.memo(CardAreaGrid);
 
 const GameCard = () => {
-  const { gameTimer } = useCardGameTimer();
-
   return (
     <>
       <MemoizedHeader />
-      <Typography
-        align='center'
-        fontSize={{
-          zero: '1.2rem',
-          max: 'h4.fontSize',
-        }}
-        gutterBottom
-      >
-        {gameTimer.toFixed(2)}
-      </Typography>
+      <MemoizedGameTimer />
       <MemoizedCardAreaGrid />
       <GameCardEndModal />
     </>

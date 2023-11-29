@@ -19,9 +19,15 @@ import {
 
 const BackDropTypography = React.memo(
   styled(Typography)<TypographyProps>(({ theme }) => ({
-    fontSize: theme.typography.h1.fontSize,
-    [theme.breakpoints.down('max')]: {
-      fontSize: '2rem',
+    padding: '0 10px',
+    fontSize: '1.8rem',
+    [theme.breakpoints.between('min', 'max')]: {
+      fontSize: '10vw',
+      padding: '0 4vw',
+    },
+    [theme.breakpoints.up('max')]: {
+      fontSize: '5rem',
+      padding: '0 40px',
     },
   }))
 );
@@ -68,8 +74,8 @@ const GameCard = () => {
       >
         <FullBackdrop open={!isStart}>
           {gameState === 'INIT' ? (
-            <Button onClick={onGameStart} sx={{ color: '#fff' }}>
-              <BackDropTypography>시작</BackDropTypography>
+            <Button onClick={onGameStart} variant='contained'>
+              <BackDropTypography>Start</BackDropTypography>
             </Button>
           ) : gameState === 'VIEW' ? (
             <BackDropTypography>{viewTimer}</BackDropTypography>

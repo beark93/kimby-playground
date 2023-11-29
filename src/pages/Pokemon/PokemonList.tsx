@@ -62,10 +62,13 @@ const PokemonList = () => {
   const [displayList, setDisplayList] = useState<PokeType[]>([]);
   const [isInit, setIsInit] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
+
+  const [search, setSearch] = useState('');
+
   const [openLoading, setOpenLoading] = useState(false);
+
   const [openPokemonInfo, setOpenPokemonInfo] = useState(false);
   const [infoPokeId, setInfoPokeId] = useState('');
-  const [search, setSearch] = useState('');
 
   const offset = useRef(0);
   const root = useRef<HTMLInputElement>(null);

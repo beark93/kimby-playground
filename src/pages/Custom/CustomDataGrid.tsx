@@ -61,6 +61,7 @@ const CustomTypography = React.memo(
   }))
 );
 
+/*============================== Header ==============================*/
 const Header = () => {
   const onClickRefesh = useCallback(() => {
     location.reload();
@@ -81,6 +82,7 @@ const Header = () => {
 };
 const MemoizedHeader = React.memo(Header);
 
+/*============================== Button Area ==============================*/
 const ButtonArea = ({
   isEdit,
   onClick,
@@ -104,90 +106,118 @@ const ButtonArea = ({
 };
 const MemoizedButtonArea = React.memo(ButtonArea);
 
-const CustomDataGrid = () => {
+/*============================== Data Grid Header ==============================*/
+const DataGridHeader = () => {
+  return (
+    <Grid item container sx={{ borderBottom: '3px double black' }}>
+      <MiddleGrid item zero={1}>
+        <CustomTypography>번호</CustomTypography>
+      </MiddleGrid>
+      <MiddleGrid item zero={3}>
+        <CustomTypography>코드</CustomTypography>
+      </MiddleGrid>
+      <MiddleGrid item zero={5}>
+        <CustomTypography>상태</CustomTypography>
+      </MiddleGrid>
+      <MiddleGrid item zero={3}>
+        <CustomTypography>날짜</CustomTypography>
+      </MiddleGrid>
+    </Grid>
+  );
+};
+const MemoizedDataGridHeader = React.memo(DataGridHeader);
+
+/*============================== Data Grid Body ==============================*/
+const DataGridBody = ({ isEdit }: { isEdit: boolean }) => {
   const [data, setData] = useState(mokData);
   const [dragId, setDragId] = useState<string | null>(null);
   const [dragOverId, setDragOverId] = useState<string | null>(null);
-  const [isEdit, setIsEdit] = useState(false);
 
   const dataGridBoxRef = useRef<HTMLDivElement>();
 
-  // 편집 버튼 클릭
-  const onClickEdit = () => {
-    setIsEdit((state) => !state);
-  };
-
   // Drag 이벤트 핸들러
-  const onDragStart = (id: string) => {
-    if (!isEdit) return;
+  const onDragStart = useCallback(
+    (id: string) => {
+      if (!isEdit) return;
 
-    //  드래그 시작 시 현재 드래그 중인 id 저장
-    setDragId(id);
-  };
+      //  드래그 시작 시 현재 드래그 중인 id 저장
+      setDragId(id);
+    },
+    [isEdit]
+  );
 
-  const onDragOver = (e: React.DragEvent<HTMLDivElement>, id: string) => {
-    e.preventDefault();
+  const onDragOver = useCallback(
+    (e: React.DragEvent<HTMLDivElement>, id: string) => {
+      e.preventDefault();
 
-    if (!isEdit) return;
+      if (!isEdit) return;
 
-    // onDragLeave 시 마지막 오버 id를 확인하기 위한 state
-    setDragOverId(id);
+      // onDragLeave 시 마지막 오버 id를 확인하기 위한 state
+      setDragOverId(id);
 
-    if (dragId && dragId !== id) {
-      setData((state) => {
-        // 현재 마우스 위치(targetIndex)에 드래그 중인 요소(dragId) 넣기
-        // splice 사용 시 원본배열 변경으로 slice 사용
-        const nonDragState = state.filter((it) => it.id !== dragId);
-        const targetIndex = nonDragState.findIndex((it) => it.id === id);
-        const front = nonDragState.slice(0, targetIndex);
-        const end = nonDragState.slice(targetIndex);
+      if (dragId && dragId !== id) {
+        setData((state) => {
+          // 현재 마우스 위치(targetIndex)에 드래그 중인 요소(dragId) 넣기
+          // splice 사용 시 원본배열 변경으로 slice 사용
+          const nonDragState = state.filter((it) => it.id !== dragId);
+          const targetIndex = nonDragState.findIndex((it) => it.id === id);
+          const front = nonDragState.slice(0, targetIndex);
+          const end = nonDragState.slice(targetIndex);
 
-        return [...front, state.filter((it) => it.id === dragId)[0], ...end];
-      });
-    }
-  };
+          return [...front, state.filter((it) => it.id === dragId)[0], ...end];
+        });
+      }
+    },
+    [dragId, isEdit]
+  );
 
-  const onDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
+  const onDragLeave = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
 
-    if (!isEdit) return;
+      if (!isEdit) return;
 
-    // DataGrid 내부에서 Leave 이벤트 발생 시 무시
-    if (
-      e.relatedTarget instanceof Element &&
-      e.currentTarget.contains(e.relatedTarget)
-    )
-      return;
+      // DataGrid 내부에서 Leave 이벤트 발생 시 무시
+      if (
+        e.relatedTarget instanceof Element &&
+        e.currentTarget.contains(e.relatedTarget)
+      )
+        return;
 
-    if (dragId && dragId !== dragOverId) {
-      setData((state) => {
-        const nonDragState = state.filter((it) => it.id !== dragId);
-        const targetIndex = nonDragState.findIndex(
-          (it) => it.id === dragOverId
-        );
-        const front = nonDragState.slice(0, targetIndex + 1);
-        const end = nonDragState.slice(targetIndex + 1);
+      if (dragId && dragId !== dragOverId) {
+        setData((state) => {
+          const nonDragState = state.filter((it) => it.id !== dragId);
+          const targetIndex = nonDragState.findIndex(
+            (it) => it.id === dragOverId
+          );
+          const front = nonDragState.slice(0, targetIndex + 1);
+          const end = nonDragState.slice(targetIndex + 1);
 
-        return [...front, state.filter((it) => it.id === dragId)[0], ...end];
-      });
-    }
-  };
+          return [...front, state.filter((it) => it.id === dragId)[0], ...end];
+        });
+      }
+    },
+    [dragId, dragOverId, isEdit]
+  );
 
-  const onDragEnd = () => {
+  const onDragEnd = useCallback(() => {
     if (!isEdit) return;
 
     // 드래그 끝나면 state 초기화
     setDragId(null);
     setDragOverId(null);
-  };
+  }, [isEdit]);
 
   // 터치 이벤트 핸들러
-  const onTouchStart = (id: string) => {
-    if (!isEdit) return;
+  const onTouchStart = useCallback(
+    (id: string) => {
+      if (!isEdit) return;
 
-    //  터치 시작 시 현재 드래그 중인 id 저장
-    setDragId(id);
-  };
+      //  터치 시작 시 현재 드래그 중인 id 저장
+      setDragId(id);
+    },
+    [isEdit]
+  );
 
   const onTouchMove = useCallback(
     (e: TouchEvent) => {
@@ -228,12 +258,12 @@ const CustomDataGrid = () => {
     [dragId, isEdit]
   );
 
-  const onTouchEnd = () => {
+  const onTouchEnd = useCallback(() => {
     if (!isEdit) return;
 
     // 터치 끝나면 state 초기화
     setDragId(null);
-  };
+  }, [isEdit]);
 
   // touchmove 이벤트 리스터 제어 > react onTouchMove 사용 시 화면 스크롤링 문제로 passive 옵션을 주기위해 addEventListener 사용
   useEffect(() => {
@@ -249,49 +279,59 @@ const CustomDataGrid = () => {
 
   return (
     <>
-      <MemoizedHeader />
-      <MemoizedButtonArea isEdit={isEdit} onClick={onClickEdit} />
-      <Grid
-        container
-        zero={12}
+      <Box
+        width='100%'
+        ref={dataGridBoxRef}
         onDragLeave={onDragLeave}
-        sx={{ border: '2px solid black' }}
+        sx={{ cursor: isEdit ? 'move' : 'default' }}
       >
-        <Grid item container sx={{ borderBottom: '3px double black' }}>
-          <MiddleGrid item zero={1}>
-            <CustomTypography>번호</CustomTypography>
-          </MiddleGrid>
-          <MiddleGrid item zero={3}>
-            <CustomTypography>코드</CustomTypography>
-          </MiddleGrid>
-          <MiddleGrid item zero={5}>
-            <CustomTypography>상태</CustomTypography>
-          </MiddleGrid>
-          <MiddleGrid item zero={3}>
-            <CustomTypography>날짜</CustomTypography>
-          </MiddleGrid>
-        </Grid>
-        <Box
-          width='100%'
-          ref={dataGridBoxRef}
-          sx={{ cursor: isEdit ? 'move' : 'default' }}
-        >
-          {data.map((it, idx) => (
-            <CustomDataGridList
-              key={`data-grid-list-${it.id}`}
-              row={it}
-              className={dragId === it.id ? 'draggable dragging' : 'draggable'}
-              draggable={isEdit}
-              testId={`custom-data-grid-list-${idx}`}
-              onDragStart={onDragStart}
-              onDragEnd={onDragEnd}
-              onDragOver={onDragOver}
-              onTouchStart={onTouchStart}
-              onTouchEnd={onTouchEnd}
-            />
-          ))}
-        </Box>
+        {data.map((it, idx) => (
+          <CustomDataGridList
+            key={`data-grid-list-${it.id}`}
+            row={it}
+            className={dragId === it.id ? 'draggable dragging' : 'draggable'}
+            draggable={isEdit}
+            testId={`custom-data-grid-list-${idx}`}
+            onDragStart={onDragStart}
+            onDragEnd={onDragEnd}
+            onDragOver={onDragOver}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          />
+        ))}
+      </Box>
+    </>
+  );
+};
+const MemoizedDataGridBody = React.memo(DataGridBody);
+
+/*============================== Custom Data Grid Area ==============================*/
+const CustomDataGridArea = () => {
+  const [isEdit, setIsEdit] = useState(false);
+
+  // 편집 버튼 클릭
+  const onClickEdit = useCallback(() => {
+    setIsEdit((state) => !state);
+  }, []);
+
+  return (
+    <>
+      <MemoizedButtonArea isEdit={isEdit} onClick={onClickEdit} />
+      <Grid container zero={12} sx={{ border: '2px solid black' }}>
+        <MemoizedDataGridHeader />
+        <MemoizedDataGridBody isEdit={isEdit} />
       </Grid>
+    </>
+  );
+};
+const MemoizedCustomDataGridArea = React.memo(CustomDataGridArea);
+
+/*============================== 상위 컴포넌트 ==============================*/
+const CustomDataGrid = () => {
+  return (
+    <>
+      <MemoizedHeader />
+      <MemoizedCustomDataGridArea />
     </>
   );
 };

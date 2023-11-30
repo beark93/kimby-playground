@@ -10,8 +10,6 @@ const GameBreakOut = React.lazy(
   () => import(/*webpackChunkName: "gameBreakOut"*/ '@pages/Game/GameBreakOut')
 );
 
-import CardGameProvider from 'src/Provider/CardGameProvider';
-
 const GameRoutes = {
   path: 'game',
   element: <Outlet />,
@@ -20,9 +18,7 @@ const GameRoutes = {
       path: 'card',
       element: (
         <React.Suspense fallback={<Loading />}>
-          <CardGameProvider>
-            <GameCard />
-          </CardGameProvider>
+          <GameCard />
         </React.Suspense>
       ),
     },

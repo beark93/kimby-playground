@@ -50,6 +50,7 @@ const ContainerBox = React.memo(
 
 const limit = 40;
 
+/*============================== Header ==============================*/
 const Header = () => {
   return (
     <BasicHeader>
@@ -66,17 +67,30 @@ const Header = () => {
 };
 const MemoizedHeader = React.memo(Header);
 
-const InputArea = ({
-  search,
-  onChange,
-  onKeyDown,
-  onClick,
-}: {
-  search: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
-  onClick: () => void;
-}) => {
+/*============================== Search Area ==============================*/
+const SearchArea = ({ onClick }: { onClick: (search: string) => void }) => {
+  const [search, setSearch] = useState('');
+
+  const onChangeSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.target.value);
+    },
+    []
+  );
+
+  const onKeyDownSearch = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.keyCode === 13) {
+        onClick(search);
+      }
+    },
+    [search, onClick]
+  );
+
+  const onClickSearch = useCallback(() => {
+    onClick(search);
+  }, [onClick, search]);
+
   return (
     <InputBox mb={2}>
       <TextField
@@ -84,32 +98,34 @@ const InputArea = ({
         size='small'
         variant='outlined'
         value={search}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
+        onChange={onChangeSearch}
+        onKeyDown={onKeyDownSearch}
       />
       <Button
         variant='outlined'
         color='inherit'
         sx={{ ml: 1 }}
-        onClick={onClick}
+        onClick={onClickSearch}
       >
         검색
       </Button>
     </InputBox>
   );
 };
-const MemoizedInputArea = React.memo(InputArea);
+const MemoizedSearchArea = React.memo(SearchArea);
 
-const PokemonSkeletonList = () => {
+/*============================== Pokemon Skeleton ==============================*/
+const PokemonSkeletonGrid = () => {
   return new Array(4).fill(0).map((_, idx) => (
     <Grid item container key={`pokemon-skeleton-${idx}`} zero={3}>
       <PokemonSkeleton />
     </Grid>
   ));
 };
-const MemoizedPokemonSkeletonList = React.memo(PokemonSkeletonList);
+const MemoizedPokemonSkeletonGrid = React.memo(PokemonSkeletonGrid);
 
-const PokemonCardList = ({
+/*============================== Pokemon 개별 카드 ==============================*/
+const PokemonCardGrid = ({
   pokemon,
   onClick,
 }: {
@@ -122,19 +138,15 @@ const PokemonCardList = ({
     </Grid>
   );
 };
-const MemoizedPokemonCardList = React.memo(PokemonCardList);
+const MemoizedPokemonCardGrid = React.memo(PokemonCardGrid);
 
-const PokemonList = () => {
+/*============================== Pokemon Card List ==============================*/
+const PokemonCardList = ({ onClick }: { onClick: (id: string) => void }) => {
   const [displayList, setDisplayList] = useState<PokeType[]>([]);
   const [isInit, setIsInit] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
 
-  const [search, setSearch] = useState('');
-
   const [openLoading, setOpenLoading] = useState(false);
-
-  const [openPokemonInfo, setOpenPokemonInfo] = useState(false);
-  const [infoPokeId, setInfoPokeId] = useState('');
 
   const offset = useRef(0);
   const root = useRef<HTMLInputElement>(null);
@@ -187,6 +199,33 @@ const PokemonList = () => {
     }
   }, [handleObserver, isEnd, isInit, options]);
 
+  return (
+    <ContainerBox ref={root}>
+      <Grid container spacing={4}>
+        {!isInit ? (
+          <MemoizedPokemonSkeletonGrid />
+        ) : (
+          displayList.map((it) => (
+            <MemoizedPokemonCardGrid
+              key={`pokemon-${it.name}`}
+              pokemon={it}
+              onClick={onClick}
+            />
+          ))
+        )}
+      </Grid>
+      <div style={{ marginBottom: '5px' }} ref={target}></div>
+      <LoadingModal open={openLoading} />
+    </ContainerBox>
+  );
+};
+const MemoizedPokemonCardList = React.memo(PokemonCardList);
+
+/*============================== Pokemon Area ==============================*/
+const PokemonArea = () => {
+  const [openPokemonInfo, setOpenPokemonInfo] = useState(false);
+  const [infoPokeId, setInfoPokeId] = useState('');
+
   const onOpenPokeModal = useCallback((id: string) => {
     setInfoPokeId(id);
     setOpenPokemonInfo(true);
@@ -197,73 +236,48 @@ const PokemonList = () => {
     setOpenPokemonInfo(false);
   }, []);
 
-  // 검색
-  const onChangeSearch = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearch(e.target.value);
-    },
-    []
-  );
-
-  const onClickSearch = useCallback(() => {
-    if (!search) {
-      alert('검색어를 입력해 주세요.');
-      return;
-    }
-
-    let id = search;
-    if (!parseInt(search)) {
-      const filteredJson = pokeJson.filter((it) => it.name === search);
-
-      if (filteredJson.length > 0) {
-        id = filteredJson[0].pokemon_species_id.toString();
+  const handleSearch = useCallback(
+    (search: string) => {
+      if (!search) {
+        alert('검색어를 입력해 주세요.');
+        return;
       }
-      onOpenPokeModal(id.toString());
-    } else {
-      onOpenPokeModal(id);
-    }
-  }, [onOpenPokeModal, search]);
 
-  const onKeyDownSearch = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (e.keyCode === 13) {
-        onClickSearch();
+      let id = search;
+      if (!parseInt(search)) {
+        const filteredJson = pokeJson.filter((it) => it.name === search);
+
+        if (filteredJson.length > 0) {
+          id = filteredJson[0].pokemon_species_id.toString();
+        }
+        onOpenPokeModal(id.toString());
+      } else {
+        onOpenPokeModal(id);
       }
     },
-    [onClickSearch]
+    [onOpenPokeModal]
   );
 
   return (
     <>
-      <MemoizedHeader />
-      <MemoizedInputArea
-        search={search}
-        onChange={onChangeSearch}
-        onKeyDown={onKeyDownSearch}
-        onClick={onClickSearch}
-      />
-      <ContainerBox ref={root}>
-        <Grid container spacing={4}>
-          {!isInit ? (
-            <MemoizedPokemonSkeletonList />
-          ) : (
-            displayList.map((it) => (
-              <MemoizedPokemonCardList
-                key={`pokemon-${it.name}`}
-                pokemon={it}
-                onClick={onOpenPokeModal}
-              />
-            ))
-          )}
-        </Grid>
-        <div style={{ marginBottom: '5px' }} ref={target}></div>
-      </ContainerBox>
-      <LoadingModal open={openLoading} />
+      <MemoizedSearchArea onClick={handleSearch} />
+      <MemoizedPokemonCardList onClick={onOpenPokeModal} />
       <PokemonInfoModal
         open={openPokemonInfo}
         id={infoPokeId}
         onClose={onClosePokeModal}
       />
+    </>
+  );
+};
+const MemoizedPokemonArea = React.memo(PokemonArea);
+
+/*============================== 상위 컴포넌트 ==============================*/
+const PokemonList = () => {
+  return (
+    <>
+      <MemoizedHeader />
+      <MemoizedPokemonArea />
     </>
   );
 };

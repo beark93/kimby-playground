@@ -11,6 +11,8 @@ import MiddleGrid from '@components/Grid/MiddleGrid';
 import FlipPaper from '@components/Paper/FlipPaper';
 import GameCardEndModal from '@components/Modal/GameCardEndModal';
 
+import CardGameProvider from 'src/Provider/CardGameProvider';
+
 import {
   useCardGameState,
   useCardGameTimer,
@@ -68,8 +70,7 @@ const GameTimer = () => {
 };
 const MemoizedGameTimer = React.memo(GameTimer);
 
-/*============================== Card Area ==============================*/
-// 카드영역 Backdrop
+/*============================== 카드 영역 Backdrop ==============================*/
 const CardBackdrop = () => {
   const { gameState } = useCardGameState();
   const { viewTimer } = useCardGameTimer();
@@ -99,7 +100,7 @@ const CardBackdrop = () => {
 };
 const MemoizedCardBackdrop = React.memo(CardBackdrop);
 
-// 카드 개별 Grid
+/*============================== 카드 개별 ==============================*/
 const CardGrid = ({ index }: { index: number }) => {
   return (
     <MiddleGrid item zero={3}>
@@ -109,7 +110,7 @@ const CardGrid = ({ index }: { index: number }) => {
 };
 const MemoizedCardGrid = React.memo(CardGrid);
 
-// 카드영역 전체 Grid
+/*============================== Card Area ==============================*/
 const CardAreaGrid = () => {
   const { cards } = useCardGameState();
 
@@ -130,13 +131,16 @@ const CardAreaGrid = () => {
 };
 const MemoizedCardAreaGrid = React.memo(CardAreaGrid);
 
+/*============================== 상위 컴포넌트 ==============================*/
 const GameCard = () => {
   return (
     <>
       <MemoizedHeader />
-      <MemoizedGameTimer />
-      <MemoizedCardAreaGrid />
-      <GameCardEndModal />
+      <CardGameProvider>
+        <MemoizedGameTimer />
+        <MemoizedCardAreaGrid />
+        <GameCardEndModal />
+      </CardGameProvider>
     </>
   );
 };

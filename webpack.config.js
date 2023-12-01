@@ -49,7 +49,8 @@ export default function config(_, argv) {
     },
     output: {
       publicPath: '/',
-      filename: '[name].[hash:8].bundle.js',
+      filename: '[name].[contenthash:8].js',
+      chunkFilename: '[name].[contenthash:8].chunk.js',
       path: path.resolve(__dirname, 'dist'),
       clean: true,
     },

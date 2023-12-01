@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <Grid container spacing={2} columns={{ zero: 6, max: 12 }}>
       <Grid item zero={3}>
-        <IconCard title='우버현황1' onClick={() => navigate('/uber/list')} />
+        <IconCard title='우버현황' onClick={() => navigate('/uber/list')} />
       </Grid>
       <Grid item zero={3}>
         <IconCard title='카드뒤집기' onClick={() => navigate('/game/card')} />

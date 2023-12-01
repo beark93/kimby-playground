@@ -49,7 +49,7 @@ export default function config(_, argv) {
     },
     output: {
       publicPath: '/',
-      filename: '[name].[hash:8].bundle.js',
+      filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
       clean: true,
     },

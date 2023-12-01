@@ -14,13 +14,13 @@ const mokData = [
   {
     id: '1',
     code: 'BOX-001',
-    state: '대기중',
+    state: '대기',
     date: new Date(),
   },
   {
     id: '2',
     code: 'BOX-002',
-    state: '대기중',
+    state: '대기',
     date: new Date(),
   },
   {

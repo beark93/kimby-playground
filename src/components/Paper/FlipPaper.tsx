@@ -15,6 +15,10 @@ const StyledPaper = React.memo(styled(Paper)`
     duration: theme.transitions.duration.standard,
   })};
   transform-style: preserve-3d;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   & .front, .back {
     width: 100%;
     height: 100%;

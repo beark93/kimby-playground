@@ -64,7 +64,7 @@ const App = () => {
               body: {
                 height: '100vh',
                 [theme.breakpoints.up('max')]: {
-                  background: 'url(./assets/image/background.jpg)',
+                  background: 'url(/assets/image/background.jpg)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   overscrollBehaviorY: 'none',

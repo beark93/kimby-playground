@@ -24,7 +24,7 @@ const HomeTitle = React.memo(
     [theme.breakpoints.down('max')]: {
       '&::before': {
         content: '""',
-        background: 'url(./assets/image/background.jpg)',
+        background: 'url(/assets/image/background.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         opacity: '0.4',

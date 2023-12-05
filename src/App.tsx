@@ -56,6 +56,7 @@ const App = () => {
             [theme.breakpoints.up('max')]: {
               maxWidth: '600px',
               minHeight: '94vh',
+              borderRadius: '15px',
             },
           })}
         >

@@ -47,25 +47,35 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Container
           maxWidth='max'
-          sx={{
+          sx={(theme) => ({
+            position: 'relative',
             backgroundColor: '#fff',
             height: '100%',
             minHeight: '100vh',
             py: 2,
-          }}
+            [theme.breakpoints.up('max')]: {
+              maxWidth: '600px',
+              minHeight: '94vh',
+            },
+          })}
         >
           <GlobalStyles
-            styles={{
+            styles={(theme) => ({
               body: {
-                backgroundColor: '#ececec',
-                overscrollBehaviorY: 'none',
+                height: '100vh',
+                [theme.breakpoints.up('max')]: {
+                  background: 'url(./assets/image/background.jpg)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  overscrollBehaviorY: 'none',
+                  padding: '3vh 0',
+                },
               },
-            }}
+            })}
           />
           <Box
             sx={{
               width: '100%',
-              height: '100%',
               display: 'inline-block',
               minWidth: '250px',
             }}

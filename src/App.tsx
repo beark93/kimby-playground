@@ -1,3 +1,5 @@
+import React, { useEffect } from 'react';
+
 import Routes from './routes';
 
 import { CssBaseline, GlobalStyles, Container, Box } from '@mui/material';
@@ -41,6 +43,21 @@ const theme = responsiveFontSizes(
 );
 
 const App = () => {
+  const mobileFullHeight = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+
+  useEffect(() => {
+    mobileFullHeight();
+
+    window.addEventListener('resize', mobileFullHeight);
+
+    return () => {
+      window.removeEventListener('resize', mobileFullHeight);
+    };
+  });
+
   return (
     <>
       <CssBaseline />
@@ -51,7 +68,6 @@ const App = () => {
             position: 'relative',
             backgroundColor: '#fff',
             height: '100%',
-            minHeight: '100vh',
             py: 2,
             [theme.breakpoints.up('max')]: {
               maxWidth: '600px',
@@ -63,8 +79,9 @@ const App = () => {
           <GlobalStyles
             styles={(theme) => ({
               body: {
-                height: '100vh',
+                height: 'calc(var(--var, 1vh) * 100)',
                 [theme.breakpoints.up('max')]: {
+                  height: '100vh',
                   background: 'url(/assets/image/background.jpg)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',

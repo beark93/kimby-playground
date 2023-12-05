@@ -80,6 +80,8 @@ const App = () => {
             styles={(theme) => ({
               body: {
                 height: 'calc(var(--vh, 1vh) * 100)',
+                overflow: 'hidden',
+                touchAction: 'none',
                 [theme.breakpoints.up('max')]: {
                   height: '100vh',
                   background: 'url(/assets/image/background.jpg)',
@@ -87,8 +89,6 @@ const App = () => {
                   backgroundPosition: 'center',
                   overscrollBehaviorY: 'none',
                   padding: '3vh 0',
-                  overflow: 'hidden',
-                  touchAction: 'none',
                 },
               },
             })}

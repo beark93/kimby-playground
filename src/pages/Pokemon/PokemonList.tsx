@@ -31,10 +31,12 @@ const InputBox = React.memo(
 );
 
 const ContainerBox = React.memo(
-  styled(Box)<BoxProps>(() => ({
-    height: '75vh',
+  styled(Box)<BoxProps>(({ theme }) => ({
+    height: 'calc(var(--vh, 1vh) * 75)',
+    [theme.breakpoints.up('max')]: {
+      height: '75vh',
+    },
     overflow: 'auto',
-    touchAction: 'auto',
     '&::-webkit-scrollbar': {
       width: '5px',
     },

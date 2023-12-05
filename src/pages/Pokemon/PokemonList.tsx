@@ -34,6 +34,7 @@ const ContainerBox = React.memo(
   styled(Box)<BoxProps>(() => ({
     height: '75vh',
     overflow: 'auto',
+    touchAction: 'auto',
     '&::-webkit-scrollbar': {
       width: '5px',
     },

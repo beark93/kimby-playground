@@ -43,18 +43,18 @@ const theme = responsiveFontSizes(
 );
 
 const App = () => {
-  const mobileFullHeight = () => {
+  const setScreenSize = () => {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   };
 
   useEffect(() => {
-    mobileFullHeight();
+    setScreenSize();
 
-    window.addEventListener('resize', mobileFullHeight);
+    window.addEventListener('resize', () => setScreenSize());
 
     return () => {
-      window.removeEventListener('resize', mobileFullHeight);
+      window.removeEventListener('resize', () => setScreenSize());
     };
   });
 
@@ -79,7 +79,7 @@ const App = () => {
           <GlobalStyles
             styles={(theme) => ({
               body: {
-                height: 'calc(var(--var, 1vh) * 100)',
+                height: 'calc(var(--vh, 1vh) * 100)',
                 [theme.breakpoints.up('max')]: {
                   height: '100vh',
                   background: 'url(/assets/image/background.jpg)',

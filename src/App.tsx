@@ -87,6 +87,8 @@ const App = () => {
                   backgroundPosition: 'center',
                   overscrollBehaviorY: 'none',
                   padding: '3vh 0',
+                  overflow: 'hidden',
+                  touchAction: 'none',
                 },
               },
             })}

@@ -146,7 +146,6 @@ const MemoizedPokemonCardGrid = React.memo(PokemonCardGrid);
 /*============================== Pokemon Card List ==============================*/
 const PokemonCardList = ({ onClick }: { onClick: (id: string) => void }) => {
   const [displayList, setDisplayList] = useState<PokeType[]>([]);
-  const [isInit, setIsInit] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
 
   const [openLoading, setOpenLoading] = useState(false);
@@ -154,6 +153,8 @@ const PokemonCardList = ({ onClick }: { onClick: (id: string) => void }) => {
   const offset = useRef(0);
   const root = useRef<HTMLInputElement>(null);
   const target = useRef<HTMLInputElement>(null);
+
+  const isInit = displayList && displayList.length > 0;
 
   // pokeApi 호출
   const callPokeApi = (offet: number, limit: number) =>
@@ -163,7 +164,6 @@ const PokemonCardList = ({ onClick }: { onClick: (id: string) => void }) => {
         if (!res.data.next) {
           setIsEnd(true);
         }
-        setIsInit(true);
         setOpenLoading(false);
       })
       .catch(() => {
